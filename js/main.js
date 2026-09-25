@@ -44,42 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
     setCurrentYear();
     setupNavActiveLink();
     setupProductSearch();
-    setupCookieBanner();
     setupFileUpload();
     setupScrollProgress();
     setupCardTilt();
 });
-
-// ---- Cookie Consent (single banner) ----
-function setupCookieBanner() {
-    const banner = document.getElementById('cookieBanner');
-    if (!banner) return;
-    try {
-        const choice = localStorage.getItem('cf_cookie_consent');
-        if (!choice) {
-            setTimeout(() => banner.classList.add('show'), 900);
-        }
-    } catch {
-        setTimeout(() => banner.classList.add('show'), 900);
-    }
-}
-
-function acceptCookies() {
-    try { localStorage.setItem('cf_cookie_consent', 'accepted'); } catch {}
-    hideCookieBanner();
-}
-
-function declineCookies() {
-    try { localStorage.setItem('cf_cookie_consent', 'declined'); } catch {}
-    hideCookieBanner();
-}
-
-function hideCookieBanner() {
-    const banner = document.getElementById('cookieBanner');
-    if (!banner) return;
-    banner.classList.remove('show');
-    setTimeout(() => { banner.style.display = 'none'; }, 600);
-}
 
 // ---- Products ----
 async function loadProducts() {
