@@ -38,26 +38,61 @@
       ]
     }
   ],
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/products",
-      "destination": "/index.html#products",
-      "permanent": false
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/home",
+      "destination": "/index.html#home"
     },
     {
       "source": "/about",
-      "destination": "/index.html#about",
-      "permanent": false
+      "destination": "/index.html#about"
+    },
+    {
+      "source": "/collection",
+      "destination": "/index.html#products"
     },
     {
       "source": "/blog",
-      "destination": "/index.html#blog",
-      "permanent": false
+      "destination": "/blog.html"
     },
     {
       "source": "/contact",
-      "destination": "/index.html#contact",
+      "destination": "/contact.html"
+    },
+    {
+      "source": "/journal",
+      "destination": "/blog.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/products",
+      "destination": "/collection",
       "permanent": false
+    },
+    {
+      "source": "/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/blog.html",
+      "destination": "/blog",
+      "permanent": true
     }
   ]
 }
