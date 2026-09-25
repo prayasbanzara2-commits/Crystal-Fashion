@@ -428,24 +428,32 @@ function setupNavActiveLink() {
     const links = [...document.querySelectorAll('.nav-link')];
 
     const routeById = {
-        home: 'index.html#home',
-        about: 'index.html#about',
-        products: 'index.html#products',
-        blog: 'blog.html',
-        connect: 'index.html#connect',
-        contact: 'contact.html'
+        home: '#home',
+        about: '#about',
+        products: '#products',
+        blog: '#blog',
+        connect: '#connect',
+        contact: '#contact'
+    };
+
+    const normalizeHash = (href) => {
+        if (!href) return '';
+        const hashIndex = href.indexOf('#');
+        return hashIndex >= 0 ? href.slice(hashIndex) : '';
     };
 
     const setActiveLink = (id) => {
         if (!id) return;
+        const targetHash = routeById[id] || '#home';
         links.forEach(l => {
-            const href = l.getAttribute('href') || '';
-            const match = href === routeById[id] || href === `/${id}` || href === `#${id}`;
+            const href = normalizeHash(l.getAttribute('href') || '');
+            const match = href === targetHash;
             l.classList.toggle('active', match);
         });
-        const path = routeById[id] || 'index.html#home';
-        if (location.pathname !== path) {
-            try { history.replaceState(null, '', path); } catch (e) {}
+
+        const currentHash = window.location.hash || '#home';
+        if (currentHash !== targetHash) {
+            try { history.replaceState(null, '', `${window.location.pathname}${targetHash}`); } catch (e) {}
         }
     };
 
@@ -481,19 +489,19 @@ function setupNavActiveLink() {
     links.forEach(link => {
         link.addEventListener('click', (event) => {
             const rawHref = link.getAttribute('href') || '';
-            let href = rawHref;
-            if (href.startsWith('index.html#')) href = href.slice('index.html'.length);
-            if (!href || (href[0] !== '/' && href[0] !== '#')) return;
-            const matched = Object.entries(routeById).find(([, value]) => value === href || value === 'index.html' + href);
+            const hrefHash = normalizeHash(rawHref);
+            if (!hrefHash) return;
+
+            const matched = Object.entries(routeById).find(([, value]) => value === hrefHash);
             if (matched) {
                 event.preventDefault();
-                try { history.pushState(null, '', rawHref); } catch (e) {}
                 const id = matched[0];
                 const target = document.getElementById(id);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
                 setActiveLink(id);
+                try { history.pushState(null, '', `${window.location.pathname}${hrefHash}`); } catch (e) {}
             }
         });
     });
