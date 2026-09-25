@@ -1,7 +1,6 @@
 {
   "buildCommand": "echo 'Static site - no build needed'",
   "outputDirectory": ".",
-  "framework": "other",
   "regions": ["iad1"],
   "headers": [
     {
