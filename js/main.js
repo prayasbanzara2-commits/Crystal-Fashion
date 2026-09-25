@@ -113,7 +113,7 @@ function renderProducts(list) {
     grid.innerHTML = list.map((p, i) => {
         const src = imgSrc(p.image, 'products');
         return `
-        <div class="product-card fade-in" style="animation-delay:${i * 0.07}s" onclick="window.location.href='product.html?id='+${p.id}">
+        <div class="product-card fade-in" style="animation-delay:${i * 0.07}s" onclick="window.location.href='/product/${p.id}'">
             <div class="product-image">
                 ${src
                     ? `<img src="${escHtml(src)}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'product-placeholder\\'>${escHtml(p.name)}</div>'">`
@@ -143,7 +143,13 @@ function filterByCategory(cat) {
     });
     const list = cat === 'All' ? allProducts : allProducts.filter(p => p.category === cat);
     renderProducts(list);
-    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (window.location.pathname === '/' || window.location.pathname === '/home' || window.location.pathname === '/collection') {
+            history.replaceState(null, '', '/collection');
+        }
+    }
 }
 
 function setupProductSearch() {
@@ -425,25 +431,31 @@ function setupHeader() {
 function setupNavActiveLink() {
     const sections = [...document.querySelectorAll('section[id]')];
     const links = [...document.querySelectorAll('.nav-link')];
-    let clickedNavId = null;
+
+    const routeById = {
+        home: '/home',
+        about: '/about',
+        products: '/collection',
+        blog: '/blog',
+        connect: '/connect',
+        contact: '/contact'
+    };
 
     const setActiveLink = (id) => {
         if (!id) return;
         links.forEach(l => {
-            const match = l.getAttribute('href') === `#${id}`;
+            const href = l.getAttribute('href') || '';
+            const match = href === routeById[id] || href === `/${id}` || href === `#${id}`;
             l.classList.toggle('active', match);
         });
+        const path = routeById[id] || '/home';
+        if (location.pathname !== path) {
+            history.replaceState(null, '', path);
+        }
     };
 
-    const isSectionInView = (id) => {
-        const section = document.getElementById(id);
-        if (!section) return false;
-        const rect = section.getBoundingClientRect();
-        return rect.top <= window.innerHeight * 0.6 && rect.bottom >= window.innerHeight * 0.25;
-    };
-
-    const getClosestVisibleSection = () => {
-        let bestId = sections[0]?.id || '';
+    const getCurrentSectionId = () => {
+        let bestId = 'home';
         let bestDistance = Number.POSITIVE_INFINITY;
         const center = window.innerHeight * 0.45;
 
@@ -460,45 +472,45 @@ function setupNavActiveLink() {
     };
 
     const observer = new IntersectionObserver((entries) => {
-        const visible = entries
-            .filter(entry => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (clickedNavId && isSectionInView(clickedNavId)) {
-            setActiveLink(clickedNavId);
+        const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length > 0) {
+            setActiveLink(visible[0].target.id);
             return;
         }
 
-        if (visible.length > 0) {
-            const currentId = visible[0].target.id;
-            if (isSectionInView(currentId)) {
-                setActiveLink(currentId);
-                return;
-            }
-        }
-
-        const fallbackId = getClosestVisibleSection();
-        if (fallbackId) setActiveLink(fallbackId);
-    }, { threshold: [0.2, 0.5, 0.75], rootMargin: '0px 0px -10% 0px' });
+        setActiveLink(getCurrentSectionId());
+    }, { threshold: [0.2, 0.45, 0.7], rootMargin: '0px 0px -12% 0px' });
 
     sections.forEach(section => observer.observe(section));
 
     links.forEach(link => {
-        link.addEventListener('click', () => {
-            const href = link.getAttribute('href');
-            const id = href ? href.replace('#', '') : '';
-            clickedNavId = id || null;
-            if (id) setActiveLink(id);
+        link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href') || '';
+            if (!href || !href.startsWith('/')) return;
+            const matched = Object.entries(routeById).find(([, value]) => value === href);
+            if (matched) {
+                event.preventDefault();
+                history.pushState(null, '', href);
+                const id = matched[0];
+                const target = document.getElementById(id);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                setActiveLink(id);
+            }
         });
     });
 
-    window.addEventListener('hashchange', () => {
-        const hashId = location.hash.replace('#', '');
-        if (hashId) {
-            clickedNavId = hashId;
-            setActiveLink(hashId);
+    const initialRoute = location.pathname;
+    const matchedInitial = Object.entries(routeById).find(([, value]) => value === initialRoute);
+    if (matchedInitial) {
+        const target = document.getElementById(matchedInitial[0]);
+        if (target) {
+            requestAnimationFrame(() => {
+                target.scrollIntoView({ behavior: 'auto', block: 'start' });
+            });
         }
-    });
+    }
 }
 
 // ---- Helpers ----

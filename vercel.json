@@ -45,19 +45,31 @@
     },
     {
       "source": "/home",
-      "destination": "/index.html#home"
+      "destination": "/index.html"
     },
     {
       "source": "/about",
-      "destination": "/index.html#about"
+      "destination": "/index.html"
     },
     {
       "source": "/collection",
-      "destination": "/index.html#products"
+      "destination": "/index.html"
+    },
+    {
+      "source": "/connect",
+      "destination": "/index.html"
     },
     {
       "source": "/blog",
       "destination": "/blog.html"
+    },
+    {
+      "source": "/blog/:id",
+      "destination": "/blog-post.html?id=:id"
+    },
+    {
+      "source": "/product/:id",
+      "destination": "/product.html?id=:id"
     },
     {
       "source": "/contact",
@@ -92,6 +104,16 @@
     {
       "source": "/blog.html",
       "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog-post.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/product.html",
+      "destination": "/collection",
       "permanent": true
     }
   ]

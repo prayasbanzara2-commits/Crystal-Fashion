@@ -171,10 +171,10 @@
                 <span class="logo-text">Crystal Fashion</span>
             </a>
             <nav class="nav-menu" id="navMenu">
-                <a href="/" class="nav-link">Home</a>
-                <a href="/#products" class="nav-link">Collection</a>
-                <a href="blog.html" class="nav-link active">Journal</a>
-                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="/home" class="nav-link">Home</a>
+                <a href="/collection" class="nav-link">Collection</a>
+                <a href="/blog" class="nav-link active">Journal</a>
+                <a href="/contact" class="nav-link">Contact</a>
                 <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
@@ -190,8 +190,8 @@
                 <h1>Stories from our studio.</h1>
                 <p>Explore the craft, culture, and values behind every handmade piece. Our journal shares the stories, ideas, and sustainable philosophy that shape Crystal Fashion.</p>
                 <div class="page-hero-actions">
-                    <a href="/#products" class="btn btn-primary">Discover collection</a>
-                    <a href="contact.html" class="btn btn-secondary">Talk to us</a>
+                    <a href="/collection" class="btn btn-primary">Discover collection</a>
+                    <a href="/contact" class="btn btn-secondary">Talk to us</a>
                 </div>
             </div>
         </section>
@@ -221,17 +221,17 @@
                     <h4>Explore</h4>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="/#products">Collection</a></li>
-                        <li><a href="blog.html">Journal</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/collection">Collection</a></li>
+                        <li><a href="/blog">Journal</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="cookies.html">Cookie Policy</a></li>
-                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/cookies">Cookie Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -297,7 +297,7 @@
                         <p>${escHtml(post.excerpt || post.content || '')}</p>
                         <div class="journal-meta">
                             <span>${escHtml(post.author)} · ${escHtml(post.date)}</span>
-                            <a class="journal-btn" href="blog-post.html?id=${post.id}">Read story →</a>
+                            <a class="journal-btn" href="/blog/${post.id}">Read story →</a>
                         </div>
                     </div>
                 </article>
