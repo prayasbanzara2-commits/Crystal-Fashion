@@ -81,7 +81,7 @@ function renderProducts(list) {
     grid.innerHTML = list.map((p, i) => {
         const src = imgSrc(p.image, 'products');
         return `
-        <div class="product-card fade-in" style="animation-delay:${i * 0.07}s" onclick="window.location.href='/product/${p.id}'">
+        <div class="product-card fade-in" style="animation-delay:${i * 0.07}s" onclick="window.location.href='product.html?id=${p.id}'">
             <div class="product-image">
                 ${src
                     ? `<img src="${escHtml(src)}" alt="${escHtml(p.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'product-placeholder\\'>${escHtml(p.name)}</div>'">`
@@ -115,7 +115,7 @@ function filterByCategory(cat) {
     if (productsSection) {
         productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         if (window.location.pathname === '/' || window.location.pathname === '/home' || window.location.pathname === '/collection') {
-            history.replaceState(null, '', '/collection');
+            try { history.replaceState(null, '', 'index.html#products'); } catch (e) {}
         }
     }
 }
@@ -401,12 +401,12 @@ function setupNavActiveLink() {
     const links = [...document.querySelectorAll('.nav-link')];
 
     const routeById = {
-        home: '/home',
-        about: '/about',
-        products: '/collection',
-        blog: '/blog',
-        connect: '/connect',
-        contact: '/contact'
+        home: 'index.html#home',
+        about: 'index.html#about',
+        products: 'index.html#products',
+        blog: 'blog.html',
+        connect: 'index.html#connect',
+        contact: 'contact.html'
     };
 
     const setActiveLink = (id) => {
@@ -416,9 +416,9 @@ function setupNavActiveLink() {
             const match = href === routeById[id] || href === `/${id}` || href === `#${id}`;
             l.classList.toggle('active', match);
         });
-        const path = routeById[id] || '/home';
+        const path = routeById[id] || 'index.html#home';
         if (location.pathname !== path) {
-            history.replaceState(null, '', path);
+            try { history.replaceState(null, '', path); } catch (e) {}
         }
     };
 
@@ -453,12 +453,14 @@ function setupNavActiveLink() {
 
     links.forEach(link => {
         link.addEventListener('click', (event) => {
-            const href = link.getAttribute('href') || '';
-            if (!href || !href.startsWith('/')) return;
-            const matched = Object.entries(routeById).find(([, value]) => value === href);
+            const rawHref = link.getAttribute('href') || '';
+            let href = rawHref;
+            if (href.startsWith('index.html#')) href = href.slice('index.html'.length);
+            if (!href || (href[0] !== '/' && href[0] !== '#')) return;
+            const matched = Object.entries(routeById).find(([, value]) => value === href || value === 'index.html' + href);
             if (matched) {
                 event.preventDefault();
-                history.pushState(null, '', href);
+                try { history.pushState(null, '', rawHref); } catch (e) {}
                 const id = matched[0];
                 const target = document.getElementById(id);
                 if (target) {

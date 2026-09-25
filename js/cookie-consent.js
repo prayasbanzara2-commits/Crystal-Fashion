@@ -9,7 +9,7 @@
         <div class="cookie-banner-content">
             <div class="cookie-banner-text">
                 <strong>We value your privacy</strong>
-                <p>We use cookies to improve your browsing experience, analyse site traffic and remember your preferences. Read our <a href="/cookies.html">Cookie Policy</a>, <a href="/privacy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Service</a> to learn more.</p>
+                <p>We use cookies to improve your browsing experience, analyse site traffic and remember your preferences. Read our <a href="cookies.html">Cookie Policy</a>, <a href="privacy.html">Privacy Policy</a> and <a href="terms.html">Terms of Service</a> to learn more.</p>
             </div>
             <div class="cookie-banner-actions">
                 <button class="cookie-btn cookie-btn-decline" type="button">Decline</button>

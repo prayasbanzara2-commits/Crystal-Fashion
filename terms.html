@@ -14,17 +14,17 @@
 
     <header class="header sticky-header" id="mainHeader">
         <div class="header-container">
-            <a href="/" class="logo">
+            <a href="index.html#home" class="logo">
                 <div class="logo-img-wrap"><img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img"></div>
                 <span class="logo-text">Crystal Fashion</span>
             </a>
             <nav class="nav-menu" id="navMenu">
-                <a href="/#home" class="nav-link">Home</a>
-                <a href="/#about" class="nav-link">About</a>
-                <a href="/#products" class="nav-link">Products</a>
-                <a href="/#blog" class="nav-link">Blog</a>
-                <a href="/#connect" class="nav-link">Connect</a>
-                <a href="/#contact" class="nav-link">Contact</a>
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#products" class="nav-link">Products</a>
+                <a href="index.html#blog" class="nav-link">Blog</a>
+                <a href="index.html#connect" class="nav-link">Connect</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
         </div>
@@ -91,7 +91,7 @@
                 <p>To the maximum extent permitted by law, Crystal Fashion is not liable for indirect, incidental or consequential damages arising from use of the website or purchase of products. Our total liability for any claim is limited to the amount paid for the order in question.</p>
 
                 <h2>10. Privacy &amp; Cookies</h2>
-                <p>Your use of this website is also governed by our <a href="/privacy">Privacy Policy</a> and <a href="/cookies">Cookie Policy</a>.</p>
+                <p>Your use of this website is also governed by our <a href="privacy.html">Privacy Policy</a> and <a href="cookies.html">Cookie Policy</a>.</p>
 
                 <h2>11. Governing Law</h2>
                 <p>These Terms are governed by the laws of Nepal. Any disputes will be subject to the exclusive jurisdiction of the courts of Kathmandu, Nepal.</p>
@@ -105,7 +105,7 @@
                 💬 <a href="https://wa.me/9779704828728">+977 9704828728</a><br>
                 📍 Kathmandu, Bagmati Province, Nepal</p>
 
-                <a href="/" class="legal-back">← Back to Crystal Fashion</a>
+                <a href="index.html#home" class="legal-back">← Back to Crystal Fashion</a>
             </article>
         </div>
     </section>
@@ -114,11 +114,11 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-legal-links">
-                <a href="/privacy">Privacy Policy</a>
-                <a href="/cookies">Cookie Policy</a>
-                <a href="/terms">Terms of Service</a>
-                <a href="/contact">Contact</a>
-                <a href="/about">About</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact</a>
+                <a href="about.html">About</a>
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="year"></span> Crystal Fashion. All rights reserved.</p>
@@ -134,6 +134,6 @@
         if (mb && mn) mb.addEventListener('click', () => { mn.classList.toggle('active'); mb.classList.toggle('open'); });
         window.addEventListener('scroll', () => { document.getElementById('mainHeader')?.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
     </script>
-    <script src="/js/cookie-consent.js"></script>
+    <script src="js/cookie-consent.js"></script>
 </body>
 </html>

@@ -13,11 +13,11 @@
     <meta property="og:url" content="https://www.crystalfashionnepal.com/product.html">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="canonical" href="https://www.crystalfashionnepal.com/product.html">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="site.webmanifest">
     <title>Product · Crystal Fashion</title>
-    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link rel="icon" type="image/png" href="images/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         .pd-wrap { max-width: 1100px; margin: 0 auto; padding: 7.5rem 1.5rem 4rem; }
         .pd-crumb { font-size: .85rem; color: var(--brown-soft); margin-bottom: 1.6rem; }
@@ -70,21 +70,21 @@
     <!-- Navigation -->
     <header class="header sticky-header" id="mainHeader">
         <div class="header-container">
-            <a href="/" class="logo">
+            <a href="index.html#home" class="logo">
                 <div class="logo-img-wrap">
-                    <img src="/images/logo.png" alt="Crystal Fashion Logo" class="logo-img">
+                    <img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img">
                 </div>
                 <span class="logo-text">Crystal Fashion</span>
             </a>
             <nav class="nav-menu" id="navMenu">
-                <a href="/home" class="nav-link">Home</a>
-                <a href="/about" class="nav-link">About</a>
-                <a href="/collection" class="nav-link">Products</a>
-                <a href="/blog" class="nav-link">Blog</a>
-                <a href="/connect" class="nav-link">Connect</a>
-                <a href="/contact" class="nav-link">Contact</a>
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="index.html#products" class="nav-link">Products</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="index.html#connect" class="nav-link">Connect</a>
+                <a href="contact.html" class="nav-link">Contact</a>
                 <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">💬 WhatsApp</a>
-                <a href="/admin.html" class="nav-admin" title="Admin Panel" aria-label="Admin Panel">
+                <a href="admin.html" class="nav-admin" title="Admin Panel" aria-label="Admin Panel">
                     <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5-.38 1.03-.7 1.62-.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
                 </a>
             </nav>
@@ -96,8 +96,8 @@
 
     <main class="pd-wrap">
         <nav class="pd-crumb">
-            <a href="/">Home</a> &nbsp;/&nbsp;
-            <a href="/collection">Products</a> &nbsp;/&nbsp;
+            <a href="index.html#home">Home</a> &nbsp;/&nbsp;
+            <a href="index.html#products">Products</a> &nbsp;/&nbsp;
             <span id="crumbName">Product</span>
         </nav>
 
@@ -113,12 +113,12 @@
     <footer class="footer">
         <div class="pd-footer-inner">
             <div class="footer-legal-links">
-                <a href="/privacy">Privacy Policy</a>
-                <a href="/cookies">Cookie Policy</a>
-                <a href="/terms">Terms of Service</a>
-                <a href="/contact">Contact</a>
-                <a href="/about">About</a>
-                <a href="/admin.html" class="footer-admin-link">⚙ Admin</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="contact.html">Contact</a>
+                <a href="about.html">About</a>
+                <a href="admin.html" class="footer-admin-link">⚙ Admin</a>
             </div>
             <div class="footer-bottom">
                 <p>&copy; <span id="year"></span> Crystal Fashion. All rights reserved.</p>
@@ -127,7 +127,7 @@
         </div>
     </footer>
 
-    <script src="/js/products-data.js"></script>
+    <script src="js/products-data.js"></script>
     <script>
     (function () {
         'use strict';
@@ -148,7 +148,7 @@
             var stored = null;
             try { stored = JSON.parse(localStorage.getItem('cf_products') || 'null'); } catch (e) { stored = null; }
             if (Array.isArray(stored) && stored.length) return Promise.resolve(stored);
-            return fetch('/data/products.json')
+            return fetch('data/products.json')
                 .then(function (r) { if (!r.ok) throw new Error('fail'); return r.json(); })
                 .then(function (d) {
                     return (Array.isArray(d.products) && d.products.length) ? d.products : CF_PRODUCTS_FALLBACK;
@@ -173,7 +173,7 @@
                         '<div style="font-size:3.5rem;">🛍️</div>' +
                         '<h1>Product not found</h1>' +
                         '<p>This product may have been removed or the link is incorrect.</p>' +
-                        '<a href="/collection" class="inq-btn" style="background:var(--terracotta);box-shadow:0 10px 24px rgba(199,93,58,.35);">← Browse all products</a>' +
+                        '<a href="index.html#products" class="inq-btn" style="background:var(--terracotta);box-shadow:0 10px 24px rgba(199,93,58,.35);">← Browse all products</a>' +
                     '</div>';
                 return;
             }
@@ -219,7 +219,7 @@
                             '<span>📦 MOQ 50 pcs</span>' +
                         '</div>' +
                         '<a class="inq-btn" href="' + waLink + '" target="_blank" rel="noopener">💬 Inquire Now on WhatsApp</a>' +
-                        '<br><a href="/collection" class="pd-back">← Back to all products</a>' +
+                        '<br><a href="index.html#products" class="pd-back">← Back to all products</a>' +
                     '</div>' +
                 '</div>';
 
@@ -245,7 +245,7 @@
                 $('pdRelated').style.display = 'block';
                 $('relGrid').innerHTML = related.map(function (r) {
                     var src = resolveImg(r.image);
-                    return '<a class="rel-card" href="/product/' + r.id + '">' +
+                    return '<a class="rel-card" href="product.html?id=' + r.id + '">' +
                         '<div class="ri">' + (src ? '<img src="' + esc(src) + '" alt="' + esc(r.name) + '" loading="lazy" onerror="this.outerHTML=\'🛍️\'">' : '🛍️') + '</div>' +
                         '<div class="rb"><div class="rn">' + esc(r.name) + '</div><div class="rp">NPR ' + Number(r.price).toLocaleString() + '</div></div>' +
                     '</a>';
@@ -268,6 +268,6 @@
         }, { passive: true });
     })();
     </script>
-    <script src="/js/cookie-consent.js"></script>
+    <script src="js/cookie-consent.js"></script>
 </body>
 </html>

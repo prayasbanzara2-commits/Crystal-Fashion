@@ -164,17 +164,17 @@
 <body class="journal-page luxury-page">
     <header class="header sticky-header" id="mainHeader">
         <div class="header-container">
-            <a href="/" class="logo">
+            <a href="index.html#home" class="logo">
                 <div class="logo-img-wrap">
                     <img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img">
                 </div>
                 <span class="logo-text">Crystal Fashion</span>
             </a>
             <nav class="nav-menu" id="navMenu">
-                <a href="/home" class="nav-link">Home</a>
-                <a href="/collection" class="nav-link">Collection</a>
-                <a href="/blog" class="nav-link active">Journal</a>
-                <a href="/contact" class="nav-link">Contact</a>
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#products" class="nav-link">Collection</a>
+                <a href="blog.html" class="nav-link active">Journal</a>
+                <a href="contact.html" class="nav-link">Contact</a>
                 <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
@@ -190,8 +190,8 @@
                 <h1>Stories from our studio.</h1>
                 <p>Explore the craft, culture, and values behind every handmade piece. Our journal shares the stories, ideas, and sustainable philosophy that shape Crystal Fashion.</p>
                 <div class="page-hero-actions">
-                    <a href="/collection" class="btn btn-primary">Discover collection</a>
-                    <a href="/contact" class="btn btn-secondary">Talk to us</a>
+                    <a href="index.html#products" class="btn btn-primary">Discover collection</a>
+                    <a href="contact.html" class="btn btn-secondary">Talk to us</a>
                 </div>
             </div>
         </section>
@@ -220,18 +220,18 @@
                 <div class="footer-section">
                     <h4>Explore</h4>
                     <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/about">About</a></li>
-                        <li><a href="/collection">Collection</a></li>
-                        <li><a href="/blog">Journal</a></li>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#products">Collection</a></li>
+                        <li><a href="blog.html">Journal</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Legal</h4>
                     <ul>
-                        <li><a href="/privacy">Privacy Policy</a></li>
-                        <li><a href="/cookies">Cookie Policy</a></li>
-                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="cookies.html">Cookie Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -297,7 +297,7 @@
                         <p>${escHtml(post.excerpt || post.content || '')}</p>
                         <div class="journal-meta">
                             <span>${escHtml(post.author)} · ${escHtml(post.date)}</span>
-                            <a class="journal-btn" href="/blog/${post.id}">Read story →</a>
+                            <a class="journal-btn" href="blog-post.html?id=${post.id}">Read story →</a>
                         </div>
                     </div>
                 </article>
@@ -325,6 +325,6 @@
             window.addEventListener('scroll', () => header && header.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
         });
     </script>
-    <script src="/js/cookie-consent.js"></script>
+    <script src="js/cookie-consent.js"></script>
 </body>
 </html>
