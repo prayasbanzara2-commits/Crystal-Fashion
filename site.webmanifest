@@ -1,0 +1,17 @@
+{
+  "name": "Crystal Fashion",
+  "short_name": "Crystal",
+  "description": "Premium handcrafted fashion from Nepal for wholesalers and boutiques worldwide.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f1ea",
+  "theme_color": "#c75d3a",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

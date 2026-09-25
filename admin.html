@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#c75d3a">
+    <title>Admin Panel · Crystal Fashion</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --terracotta: #c75d3a;
+            --terracotta-dark: #a8472a;
+            --terracotta-soft: #e8a890;
+            --ivory: #faf5ec;
+            --ivory-warm: #f3ead9;
+            --ivory-deep: #ebdfc6;
+            --brown: #2d1f17;
+            --brown-2: #4a3528;
+            --brown-soft: #6b5443;
+            --green: #2e7d4f;
+            --red: #b3392e;
+            --shadow: 0 10px 30px rgba(45,31,23,.10);
+            --radius: 14px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--ivory);
+            color: var(--brown);
+            min-height: 100vh;
+        }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+        button { font-family: 'Inter', sans-serif; cursor: pointer; }
+        input, textarea, select { font-family: 'Inter', sans-serif; }
+
+        /* ============ LOGIN ============ */
+        #loginView {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--ivory) 0%, var(--ivory-warm) 55%, var(--ivory-deep) 100%);
+            padding: 1.5rem;
+        }
+        .login-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--ivory-deep);
+            padding: 2.5rem 2.25rem;
+            width: 100%; max-width: 400px;
+            text-align: center;
+        }
+        .login-card img { width: 76px; height: 76px; object-fit: contain; margin-bottom: .75rem; }
+        .login-card h1 { font-size: 1.55rem; margin-bottom: .25rem; }
+        .login-card p.sub { color: var(--brown-soft); font-size: .85rem; margin-bottom: 1.6rem; }
+        .login-field { text-align: left; margin-bottom: 1rem; }
+        .login-field label { display: block; font-size: .78rem; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; color: var(--brown-2); margin-bottom: .4rem; }
+        .login-field input {
+            width: 100%; padding: .8rem 1rem;
+            border: 1.5px solid var(--ivory-deep); border-radius: 10px;
+            font-size: .95rem; background: var(--ivory);
+            transition: border-color .2s;
+        }
+        .login-field input:focus { outline: none; border-color: var(--terracotta); background: #fff; }
+        .login-error {
+            display: none; background: #fdeceb; color: var(--red);
+            font-size: .82rem; padding: .6rem .9rem; border-radius: 8px;
+            margin-bottom: 1rem; text-align: left;
+        }
+        .login-error.show { display: block; }
+        .btn-block {
+            width: 100%; padding: .85rem;
+            background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark));
+            color: #fff; border: none; border-radius: 10px;
+            font-size: .95rem; font-weight: 600;
+            transition: transform .15s, box-shadow .2s;
+        }
+        .btn-block:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(199,93,58,.35); }
+        .login-back { display: inline-block; margin-top: 1.1rem; font-size: .82rem; color: var(--brown-soft); text-decoration: none; }
+        .login-back:hover { color: var(--terracotta); }
+        .shake { animation: shake .4s; }
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            25% { transform: translateX(-7px); }
+            75% { transform: translateX(7px); }
+        }
+
+        /* ============ ADMIN LAYOUT ============ */
+        #adminView { display: none; }
+        .admin-topbar {
+            position: sticky; top: 0; z-index: 50;
+            background: var(--brown);
+            color: var(--ivory);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: .8rem 1.5rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,.18);
+        }
+        .admin-brand { display: flex; align-items: center; gap: .7rem; }
+        .admin-brand img { width: 38px; height: 38px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; }
+        .admin-brand .t1 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; }
+        .admin-brand .t2 { font-size: .68rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--terracotta-soft); }
+        .topbar-actions { display: flex; gap: .6rem; }
+        .tb-btn {
+            background: rgba(250,245,236,.12); color: var(--ivory);
+            border: 1px solid rgba(250,245,236,.25);
+            padding: .5rem 1rem; border-radius: 8px; font-size: .82rem; font-weight: 600;
+            text-decoration: none; display: inline-flex; align-items: center; gap: .4rem;
+            transition: background .2s;
+        }
+        .tb-btn:hover { background: rgba(250,245,236,.22); }
+        .tb-btn.logout { background: var(--terracotta); border-color: var(--terracotta); }
+        .tb-btn.logout:hover { background: var(--terracotta-dark); }
+
+        .admin-wrap { max-width: 1180px; margin: 0 auto; padding: 1.8rem 1.5rem 4rem; }
+
+        /* Stats */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 1rem; margin-bottom: 1.8rem; }
+        .stat-tile {
+            background: #fff; border: 1px solid var(--ivory-deep); border-radius: var(--radius);
+            padding: 1.1rem 1.25rem; box-shadow: var(--shadow);
+        }
+        .stat-tile .num { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--terracotta); }
+        .stat-tile .lbl { font-size: .76rem; color: var(--brown-soft); letter-spacing: .5px; text-transform: uppercase; margin-top: .15rem; }
+
+        .admin-grid { display: grid; grid-template-columns: 400px 1fr; gap: 1.5rem; align-items: start; }
+        @media (max-width: 920px) { .admin-grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: #fff; border: 1px solid var(--ivory-deep);
+            border-radius: var(--radius); box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+        .card h2 { font-size: 1.25rem; margin-bottom: .25rem; }
+        .card .hint { font-size: .8rem; color: var(--brown-soft); margin-bottom: 1.2rem; }
+
+        .fg { margin-bottom: .95rem; }
+        .fg label { display: block; font-size: .76rem; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; color: var(--brown-2); margin-bottom: .35rem; }
+        .fg input, .fg textarea {
+            width: 100%; padding: .65rem .85rem;
+            border: 1.5px solid var(--ivory-deep); border-radius: 9px;
+            font-size: .9rem; background: var(--ivory);
+            transition: border-color .2s, background .2s;
+        }
+        .fg input:focus, .fg textarea:focus { outline: none; border-color: var(--terracotta); background: #fff; }
+        .fg textarea { resize: vertical; min-height: 90px; }
+        .fg .req { color: var(--red); }
+        .fg .ferr { display: none; color: var(--red); font-size: .75rem; margin-top: .3rem; }
+        .fg.invalid input, .fg.invalid textarea { border-color: var(--red); }
+        .fg.invalid .ferr { display: block; }
+
+        /* Image uploader */
+        .img-drop {
+            border: 2px dashed var(--terracotta-soft); border-radius: 12px;
+            background: var(--ivory);
+            padding: 1.4rem 1rem; text-align: center;
+            cursor: pointer; transition: border-color .2s, background .2s;
+        }
+        .img-drop:hover, .img-drop.drag { border-color: var(--terracotta); background: #fff; }
+        .img-drop .ic { font-size: 1.8rem; }
+        .img-drop p { font-size: .82rem; color: var(--brown-soft); margin-top: .35rem; }
+        .img-drop p b { color: var(--terracotta); }
+        .img-preview-wrap { display: none; position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--ivory-deep); }
+        .img-preview-wrap.show { display: block; }
+        .img-preview-wrap img { width: 100%; max-height: 230px; object-fit: cover; display: block; }
+        .img-remove {
+            position: absolute; top: 8px; right: 8px;
+            background: rgba(45,31,23,.85); color: #fff; border: none;
+            border-radius: 8px; padding: .35rem .7rem; font-size: .75rem; font-weight: 600;
+        }
+        .img-remove:hover { background: var(--red); }
+
+        .form-actions { display: flex; gap: .6rem; margin-top: 1.2rem; }
+        .btn-primary {
+            flex: 1; padding: .8rem;
+            background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark));
+            color: #fff; border: none; border-radius: 10px; font-weight: 600; font-size: .9rem;
+            transition: transform .15s, box-shadow .2s;
+        }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(199,93,58,.35); }
+        .btn-ghost {
+            padding: .8rem 1.1rem; background: transparent;
+            border: 1.5px solid var(--ivory-deep); border-radius: 10px;
+            color: var(--brown-soft); font-weight: 600; font-size: .88rem;
+        }
+        .btn-ghost:hover { border-color: var(--terracotta); color: var(--terracotta); }
+
+        /* Product list */
+        .list-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .list-tools { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .tool-btn {
+            background: var(--ivory-warm); border: 1px solid var(--ivory-deep);
+            border-radius: 8px; padding: .45rem .85rem; font-size: .78rem; font-weight: 600;
+            color: var(--brown-2); transition: all .2s;
+        }
+        .tool-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+        .tool-btn.danger:hover { border-color: var(--red); color: var(--red); }
+        .list-search { width: 100%; padding: .6rem .9rem; border: 1.5px solid var(--ivory-deep); border-radius: 9px; font-size: .88rem; background: var(--ivory); margin-bottom: .9rem; }
+        .list-search:focus { outline: none; border-color: var(--terracotta); background: #fff; }
+
+        .plist { display: flex; flex-direction: column; gap: .6rem; max-height: 560px; overflow-y: auto; padding-right: .25rem; }
+        .plist::-webkit-scrollbar { width: 6px; }
+        .plist::-webkit-scrollbar-thumb { background: var(--terracotta-soft); border-radius: 3px; }
+        .pitem {
+            display: flex; align-items: center; gap: .85rem;
+            border: 1px solid var(--ivory-deep); border-radius: 11px;
+            padding: .6rem .75rem; background: var(--ivory);
+            transition: border-color .2s, background .2s;
+        }
+        .pitem:hover { border-color: var(--terracotta-soft); background: #fff; }
+        .pitem.editing { border-color: var(--terracotta); box-shadow: 0 0 0 3px rgba(199,93,58,.15); }
+        .pitem img, .pitem .noimg {
+            width: 54px; height: 54px; border-radius: 9px; object-fit: cover; flex-shrink: 0;
+            background: var(--ivory-deep);
+        }
+        .pitem .noimg { display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        .pitem .pinfo { flex: 1; min-width: 0; }
+        .pitem .pname { font-weight: 600; font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pitem .pmeta { font-size: .75rem; color: var(--brown-soft); margin-top: .15rem; }
+        .pitem .pcat {
+            display: inline-block; background: var(--ivory-deep); color: var(--brown-2);
+            border-radius: 20px; padding: .08rem .55rem; font-size: .68rem; font-weight: 600;
+        }
+        .pitem .pprice { color: var(--terracotta); font-weight: 700; }
+        .pbtns { display: flex; gap: .35rem; flex-shrink: 0; }
+        .icon-btn {
+            width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--ivory-deep);
+            background: #fff; font-size: .95rem; display: flex; align-items: center; justify-content: center;
+            transition: all .2s;
+        }
+        .icon-btn:hover { border-color: var(--terracotta); transform: translateY(-1px); }
+        .icon-btn.del:hover { border-color: var(--red); background: #fdeceb; }
+        .empty-list { text-align: center; color: var(--brown-soft); font-size: .85rem; padding: 2.5rem 1rem; }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(120%);
+            background: var(--brown); color: var(--ivory);
+            padding: .85rem 1.5rem; border-radius: 12px; font-size: .88rem; font-weight: 500;
+            box-shadow: 0 12px 30px rgba(0,0,0,.25); z-index: 200;
+            transition: transform .35s cubic-bezier(.22,1,.36,1);
+            max-width: 90vw; text-align: center;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); }
+        #toast.success { background: var(--green); }
+        #toast.error { background: var(--red); }
+
+        /* Confirm modal */
+        .cf-overlay {
+            position: fixed; inset: 0; background: rgba(45,31,23,.55);
+            display: none; align-items: center; justify-content: center; z-index: 300; padding: 1rem;
+        }
+        .cf-overlay.show { display: flex; }
+        .cf-box {
+            background: #fff; border-radius: 16px; padding: 1.8rem; max-width: 380px; width: 100%;
+            text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,.3);
+        }
+        .cf-box h3 { font-size: 1.2rem; margin-bottom: .5rem; }
+        .cf-box p { font-size: .85rem; color: var(--brown-soft); margin-bottom: 1.4rem; }
+        .cf-btns { display: flex; gap: .7rem; }
+        .cf-btns button { flex: 1; padding: .7rem; border-radius: 9px; font-weight: 600; font-size: .88rem; border: none; }
+        .cf-cancel { background: var(--ivory-warm); color: var(--brown-2); }
+        .cf-confirm { background: var(--red); color: #fff; }
+
+        /* 1-5 photo slots grid */
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+        .photo-grid .img-drop { padding: 1rem .6rem; }
+        .photo-grid .img-drop .ic { font-size: 1.4rem; }
+        .photo-grid .img-drop p { font-size: .74rem; }
+        .photo-grid .img-drop p .sub { display:none; }
+        .photo-grid .img-preview-wrap img { max-height: 150px; }
+        .slot-label { font-size:.7rem; font-weight:700; color:var(--brown-2); letter-spacing:.4px; text-transform:uppercase; margin-bottom:.3rem; }
+        .slot-label .opt { color:var(--brown-soft); font-weight:500; text-transform:none; letter-spacing:0; }
+        .note-box {
+            background: #fff8e8; border: 1px solid #ecd9a8; border-radius: 10px;
+            padding: .8rem 1rem; font-size: .78rem; color: #7a5b23; line-height: 1.55;
+            margin-top: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============ LOGIN VIEW ============ -->
+<div id="loginView">
+    <div class="login-card" id="loginCard">
+        <img src="images/logo.png" alt="Crystal Fashion" onerror="this.style.display='none'">
+        <h1>Admin Panel</h1>
+        <p class="sub">Crystal Fashion · Kathmandu, Nepal 🇳🇵</p>
+        <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
+        <form id="loginForm" autocomplete="off">
+            <div class="login-field">
+                <label for="pw">Password</label>
+                <input type="password" id="pw" placeholder="Enter admin password" autofocus>
+            </div>
+            <button type="submit" class="btn-block">🔒 Sign In</button>
+        </form>
+        <a href="index.html" class="login-back">← Back to website</a>
+    </div>
+</div>
+
+<!-- ============ ADMIN VIEW ============ -->
+<div id="adminView">
+    <div class="admin-topbar">
+        <div class="admin-brand">
+            <img src="images/logo.png" alt="" onerror="this.style.display='none'">
+            <div>
+                <div class="t1">Crystal Fashion</div>
+                <div class="t2">Admin Panel</div>
+            </div>
+        </div>
+        <div class="topbar-actions">
+            <a href="index.html" class="tb-btn">🌐 View Site</a>
+            <button class="tb-btn logout" id="logoutBtn">⏻ Logout</button>
+        </div>
+    </div>
+
+    <div class="admin-wrap">
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-tile"><div class="num" id="statTotal">0</div><div class="lbl">Total Products</div></div>
+            <div class="stat-tile"><div class="num" id="statCats">0</div><div class="lbl">Categories</div></div>
+            <div class="stat-tile"><div class="num" id="statPhotos">0</div><div class="lbl">Total Photos</div></div>
+            <div class="stat-tile"><div class="num" id="statAvg">0</div><div class="lbl">Avg. Price (NPR)</div></div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- ===== Add / Edit form ===== -->
+            <div class="card">
+                <h2 id="formTitle">Add New Product</h2>
+                <p class="hint">Fill in the details and upload between <b>1 and 5 photos</b>. Some products need just one photo, others up to five — add as many as you like.</p>
+                <form id="productForm" autocomplete="off">
+                    <input type="hidden" id="fId">
+                    <div class="fg" id="gName">
+                        <label>Product Name <span class="req">*</span></label>
+                        <input type="text" id="fName" maxlength="80" placeholder="e.g. Handmade Hemp Tote">
+                        <span class="ferr">Please enter a product name.</span>
+                    </div>
+                    <div class="fg" id="gPrice">
+                        <label>Price (NPR) <span class="req">*</span></label>
+                        <input type="number" id="fPrice" min="1" max="10000000" step="1" placeholder="e.g. 2500">
+                        <span class="ferr">Please enter a valid price.</span>
+                    </div>
+                    <div class="fg" id="gCat">
+                        <label>Category <span class="req">*</span></label>
+                        <input type="text" id="fCat" list="catList" maxlength="30" placeholder="Pick or type a category — e.g. Tote">
+                        <datalist id="catList">
+                            <option value="Hemps"></option>
+                            <option value="Tote"></option>
+                            <option value="Trousers"></option>
+                            <option value="Hobo"></option>
+                            <option value="Side Bag"></option>
+                        </datalist>
+                        <span class="ferr">Please choose or type a category.</span>
+                    </div>
+                    <div class="fg">
+                        <label>Description</label>
+                        <textarea id="fDesc" maxlength="500" placeholder="Short description of the product..."></textarea>
+                    </div>
+                    <div class="fg">
+                        <label>Product Photos <span class="req">*</span> <span style="text-transform:none;font-weight:500;color:var(--brown-soft);">— 1 to 5 photos (first is the main photo)</span></label>
+                        <div class="photo-grid" id="photoGrid"></div>
+                        <input type="file" id="fImgMulti" accept="image/*" style="display:none">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="saveBtn">＋ Add Product</button>
+                        <button type="button" class="btn-ghost" id="cancelEditBtn" style="display:none;">Cancel</button>
+                    </div>
+                </form>
+                <div class="note-box">
+                    💾 <b>How saving works:</b> products are stored in this browser and appear on the website instantly. Use <b>“Export products.json”</b> and replace the file in <code>data/</code> when deploying to make changes permanent for all visitors.
+                </div>
+            </div>
+
+            <!-- ===== Product list ===== -->
+            <div class="card">
+                <div class="list-head">
+                    <div>
+                        <h2>Manage Products</h2>
+                        <p class="hint" style="margin-bottom:0;">Edit, delete or review everything on your site.</p>
+                    </div>
+                    <div class="list-tools">
+                        <button class="tool-btn" id="exportBtn">⬇ Export products.json</button>
+                        <button class="tool-btn danger" id="resetBtn">↺ Reset to defaults</button>
+                    </div>
+                </div>
+                <input type="text" class="list-search" id="listSearch" placeholder="🔍 Search products...">
+                <div class="plist" id="plist"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Confirm dialog -->
+<div class="cf-overlay" id="cfOverlay">
+    <div class="cf-box">
+        <h3 id="cfTitle">Are you sure?</h3>
+        <p id="cfText">This action cannot be undone.</p>
+        <div class="cf-btns">
+            <button class="cf-cancel" id="cfCancel">Cancel</button>
+            <button class="cf-confirm" id="cfConfirm">Yes, continue</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* =====================================================
+   CRYSTAL FASHION - Admin Panel
+   ===================================================== */
+'use strict';
+
+var ADMIN_PASSWORD = 'crystalfashion123';
+var STORE_KEY = 'cf_products';
+var AUTH_KEY = 'cf_admin_auth';
+
+var DEFAULT_PRODUCTS = [
+  { id: 1, name: "Hemp Tote Bag - Eco Friendly", price: 2500, image: "hemp-tote-1.jpg", category: "Tote", description: "Spacious and durable tote bag crafted from sustainable hemp fabric. Perfect for everyday use with multiple compartments for organized storage. Features reinforced handles and a natural aesthetic." },
+  { id: 2, name: "Leather Crossbody Satchel", price: 6800, image: "leather-crossbody.jpg", category: "Side Bag", description: "Authentic leather crossbody bag with traditional craftsmanship. Features genuine Nepali leather with a rich, aged patina. Perfect for daily commute or travel with adjustable shoulder strap." },
+  { id: 3, name: "Cotton Canvas Backpack", price: 3500, image: "cotton-backpack.jpg", category: "Hemps", description: "Lightweight and versatile backpack made from organic cotton canvas. Ideal for travel, work, or everyday adventures. Water-resistant coating and multiple pockets for functionality." },
+  { id: 4, name: "Traditional Dhaka Hobo Bag", price: 2800, image: "dhaka-hobo.jpg", category: "Hobo", description: "Authentic Dhaka weave hobo bag featuring traditional patterns. A celebration of Nepali textile heritage. Soft and supple leather base with intricate hand-woven details." },
+  { id: 5, name: "Organic Cotton Trousers", price: 3200, image: "cotton-trousers.jpg", category: "Trousers", description: "Premium organic cotton trousers with a modern cut. Breathable, durable, and perfect for any season. Available in multiple sizes with comfortable elastic waistband." },
+  { id: 6, name: "Hemp-Linen Blend Pants", price: 4200, image: "hemp-linen-pants.jpg", category: "Trousers", description: "Lightweight blend of hemp and linen for ultimate comfort. Perfect for warm climates with a natural, elegant look. Sustainable fabric sourced responsibly." },
+  { id: 7, name: "Tailored Wool Trousers", price: 5500, image: "wool-trousers.jpg", category: "Trousers", description: "Finely tailored wool trousers with impeccable craftsmanship. Sophisticated and timeless design for the modern professional. Premium quality fabric with excellent durability." },
+  { id: 8, name: "Handblock Print Wrap", price: 2200, image: "handblock-wrap.jpg", category: "Hemps", description: "Traditional handblock printed wrap featuring intricate designs. Versatile piece perfect for any occasion. Can be worn as a shawl, scarf, or beach cover-up." },
+  { id: 9, name: "Himalayan Wool Scarf", price: 2800, image: "wool-scarf.jpg", category: "Hemps", description: "Soft and warm wool scarf handwoven in the Himalayan region. Timeless elegance with exceptional quality. Perfect for adding a touch of warmth and style to any outfit." },
+  { id: 10, name: "Embroidered Clutch", price: 1800, image: "embroidered-clutch.jpg", category: "Hobo", description: "Beautifully embroidered clutch with traditional Nepali motifs. Perfect for evening events or special occasions. Handcrafted with meticulous attention to detail." },
+  { id: 11, name: "Natural Fiber Belt", price: 1200, image: "fiber-belt.jpg", category: "Hemps", description: "Handcrafted belt made from natural fibers. Simple yet elegant, complementing any outfit perfectly. Eco-friendly and sustainable choice." },
+  { id: 12, name: "Premium Travel Duffel", price: 7500, image: "travel-duffel.jpg", category: "Tote", description: "Large capacity duffel bag crafted from premium leather. Perfect for extended travels with multiple storage compartments. Reinforced handles and durable construction." },
+  { id: 13, name: "Vintage Canvas Messenger Bag", price: 4500, image: "canvas-messenger.jpg", category: "Side Bag", description: "Classic canvas messenger bag with vintage appeal. Spacious main compartment and multiple pockets. Perfect for work, school, or casual outings." },
+  { id: 14, name: "Sustainable Tote with Pocket", price: 2900, image: "sustainable-tote.jpg", category: "Tote", description: "Eco-friendly tote bag made from recycled materials. Features inner pocket for secure storage. Durable and stylish for everyday use." },
+  { id: 15, name: "Festival Hobo Bag", price: 3100, image: "festival-hobo.jpg", category: "Hobo", description: "Colorful festival hobo bag perfect for outdoor events. Made with sustainable fabrics and traditional craftsmanship. Roomy interior with adjustable strap." }
+];
+
+var products = [];
+var editingId = null;
+var MAX_PHOTOS = 5;
+var currentImages = [];  // up to 5 data-URLs / filenames
+var listQuery = '';
+
+/* ---------- helpers ---------- */
+function $(id) { return document.getElementById(id); }
+function esc(s) {
+    if (s === null || s === undefined) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function resolveImg(image) {
+    if (!image) return '';
+    if (/^(data:|https?:|blob:)/i.test(image)) return image;
+    return 'images/products/' + image;
+}
+function toast(msg, type) {
+    var t = $('toast');
+    t.textContent = msg;
+    t.className = 'show ' + (type || '');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function () { t.className = ''; }, 2600);
+}
+
+/* ---------- storage ---------- */
+function loadStore() {
+    var stored = null;
+    try { stored = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) { stored = null; }
+    if (Array.isArray(stored) && stored.length) {
+        products = stored;
+    } else {
+        products = DEFAULT_PRODUCTS.slice();
+        saveStore();
+    }
+}
+function saveStore() {
+    try {
+        localStorage.setItem(STORE_KEY, JSON.stringify(products));
+        return true;
+    } catch (e) {
+        toast('Storage is full — try a smaller photo.', 'error');
+        return false;
+    }
+}
+
+/* ---------- auth ---------- */
+function isAuthed() {
+    try { return sessionStorage.getItem(AUTH_KEY) === '1'; } catch (e) { return false; }
+}
+function showAdmin() {
+    $('loginView').style.display = 'none';
+    $('adminView').style.display = 'block';
+    loadStore();
+    renderPhotoSlots();
+    renderAll();
+}
+
+$('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var pw = $('pw').value;
+    if (pw === ADMIN_PASSWORD) {
+        try { sessionStorage.setItem(AUTH_KEY, '1'); } catch (err) {}
+        toast('Welcome back! 👋', 'success');
+        showAdmin();
+    } else {
+        $('loginError').classList.add('show');
+        var card = $('loginCard');
+        card.classList.remove('shake');
+        void card.offsetWidth;
+        card.classList.add('shake');
+        $('pw').value = '';
+        $('pw').focus();
+    }
+});
+$('pw').addEventListener('input', function () { $('loginError').classList.remove('show'); });
+
+$('logoutBtn').addEventListener('click', function () {
+    try { sessionStorage.removeItem(AUTH_KEY); } catch (e) {}
+    location.reload();
+});
+
+/* ---------- rendering ---------- */
+function renderAll() {
+    renderStats();
+    renderList();
+}
+
+function renderStats() {
+    $('statTotal').textContent = products.length;
+    var cats = {};
+    var photos = 0;
+    var total = 0;
+    products.forEach(function (p) {
+        if (p.category) cats[p.category] = true;
+        photos += photoCountOf(p);
+        total += Number(p.price) || 0;
+    });
+    $('statCats').textContent = Object.keys(cats).length;
+    $('statPhotos').textContent = photos;
+    $('statAvg').textContent = products.length ? Math.round(total / products.length).toLocaleString() : '0';
+}
+
+function renderList() {
+    var box = $('plist');
+    var q = listQuery.toLowerCase();
+    var list = products.filter(function (p) {
+        if (!q) return true;
+        return (String(p.name).toLowerCase().indexOf(q) !== -1) ||
+               (String(p.category || '').toLowerCase().indexOf(q) !== -1);
+    });
+
+    if (!list.length) {
+        box.innerHTML = '<div class="empty-list">🛍️ No products found.<br>Add your first product using the form.</div>';
+        return;
+    }
+
+    box.innerHTML = list.map(function (p) {
+        var src = resolveImg(p.image);
+        var thumb = src
+            ? '<img src="' + esc(src) + '" alt="" onerror="this.outerHTML=\'<div class=&quot;noimg&quot;>🛍️</div>\'">'
+            : '<div class="noimg">🛍️</div>';
+        return '' +
+        '<div class="pitem' + (p.id === editingId ? ' editing' : '') + '">' +
+            thumb +
+            '<div class="pinfo">' +
+                '<div class="pname">' + esc(p.name) + '</div>' +
+                '<div class="pmeta"><span class="pcat">' + esc(p.category || 'Uncategorized') + '</span> &nbsp;<span class="pprice">NPR ' + Number(p.price).toLocaleString() + '</span> &nbsp;·&nbsp; 📷 ' + photoCountOf(p) + '</div>' +
+            '</div>' +
+            '<div class="pbtns">' +
+                '<button class="icon-btn" title="Edit" onclick="startEdit(' + p.id + ')">✏️</button>' +
+                '<button class="icon-btn del" title="Delete" onclick="askDelete(' + p.id + ')">🗑️</button>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+}
+
+$('listSearch').addEventListener('input', function () {
+    listQuery = this.value.trim();
+    renderList();
+});
+
+/* ---------- form ---------- */
+function setInvalid(groupId, bad) {
+    $(groupId).classList.toggle('invalid', !!bad);
+}
+['fName','fPrice','fCat'].forEach(function (id) {
+    $(id).addEventListener('input', function () {
+        this.closest('.fg').classList.remove('invalid');
+    });
+});
+
+$('productForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var name = $('fName').value.trim();
+    var price = parseInt($('fPrice').value, 10);
+    var cat = $('fCat').value.trim();
+    var desc = $('fDesc').value.trim();
+
+    var ok = true;
+    if (name.length < 2) { setInvalid('gName', true); ok = false; }
+    if (isNaN(price) || price <= 0) { setInvalid('gPrice', true); ok = false; }
+    if (!cat) { setInvalid('gCat', true); ok = false; }
+    if (!ok) { toast('Please fill in the required fields.', 'error'); return; }
+
+    // Normalise category against known ones (Tote, Hobo, ...)
+    var known = ['Hemps','Tote','Trousers','Hobo','Side Bag'];
+    for (var i = 0; i < known.length; i++) {
+        if (known[i].toLowerCase() === cat.toLowerCase()) { cat = known[i]; break; }
+    }
+
+    if (editingId !== null) {
+        var p = products.find(function (x) { return x.id === editingId; });
+        if (p) {
+            p.name = name; p.price = price; p.category = cat;
+            p.description = desc;
+            p.images = currentImages.slice(0, MAX_PHOTOS);
+            p.image = currentImages[0] || ''; p.image2 = currentImages[1] || '';
+        }
+        if (!saveStore()) return;
+        toast('Product updated ✓', 'success');
+    } else {
+        var newId = products.reduce(function (m, x) { return Math.max(m, Number(x.id) || 0); }, 0) + 1;
+        products.unshift({ id: newId, name: name, price: price, category: cat, description: desc, images: currentImages.slice(0, MAX_PHOTOS), image: currentImages[0] || '', image2: currentImages[1] || '' });
+        if (!saveStore()) { products.shift(); return; }
+        toast('Product added ✓', 'success');
+    }
+
+    resetFormState();
+    renderAll();
+});
+
+function resetFormState() {
+    editingId = null;
+    currentImages = [];
+    renderPhotoSlots();
+    $('productForm').reset();
+    $('fId').value = '';
+    $('formTitle').textContent = 'Add New Product';
+    $('saveBtn').textContent = '＋ Add Product';
+    $('cancelEditBtn').style.display = 'none';
+    ['gName','gPrice','gCat'].forEach(function (g) { setInvalid(g, false); });
+}
+
+$('cancelEditBtn').addEventListener('click', resetFormState);
+
+function startEdit(id) {
+    var p = products.find(function (x) { return x.id === id; });
+    if (!p) return;
+    editingId = id;
+    $('fId').value = id;
+    $('fName').value = p.name || '';
+    $('fPrice').value = p.price || '';
+    $('fCat').value = p.category || '';
+    $('fDesc').value = p.description || '';
+    currentImages = (Array.isArray(p.images) && p.images.length)
+        ? p.images.filter(Boolean).slice(0, MAX_PHOTOS)
+        : [p.image, p.image2].filter(Boolean).slice(0, MAX_PHOTOS);
+    renderPhotoSlots();
+    $('formTitle').textContent = 'Edit Product';
+    $('saveBtn').textContent = '💾 Save Changes';
+    $('cancelEditBtn').style.display = 'inline-block';
+    renderList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ---------- delete with confirm ---------- */
+var pendingDeleteId = null;
+function askDelete(id) {
+    var p = products.find(function (x) { return x.id === id; });
+    if (!p) return;
+    pendingDeleteId = id;
+    $('cfTitle').textContent = 'Delete this product?';
+    $('cfText').textContent = '"' + p.name + '" will be permanently removed from the website.';
+    $('cfOverlay').classList.add('show');
+}
+$('cfCancel').addEventListener('click', function () {
+    pendingDeleteId = null;
+    $('cfOverlay').classList.remove('show');
+});
+$('cfConfirm').addEventListener('click', function () {
+    if (pendingDeleteId !== null) {
+        products = products.filter(function (x) { return x.id !== pendingDeleteId; });
+        if (editingId === pendingDeleteId) resetFormState();
+        saveStore();
+        renderAll();
+        toast('Product deleted', 'success');
+        pendingDeleteId = null;
+    }
+    $('cfOverlay').classList.remove('show');
+});
+$('cfOverlay').addEventListener('click', function (e) {
+    if (e.target === this) { pendingDeleteId = null; this.classList.remove('show'); }
+});
+
+/* ---------- image upload: 1 to 5 photo slots, with resize/compress ---------- */
+function photoCountOf(p) {
+    if (Array.isArray(p.images) && p.images.length) return p.images.filter(Boolean).length;
+    return [p.image, p.image2].filter(Boolean).length;
+}
+
+var photoInput = $('fImgMulti');
+var photoTarget = 0; // slot index being filled
+
+function renderPhotoSlots() {
+    var grid = $('photoGrid');
+    grid.innerHTML = '';
+    for (var i = 0; i < MAX_PHOTOS; i++) {
+        (function (idx) {
+            var has = !!currentImages[idx];
+            var cell = document.createElement('div');
+            var lab = document.createElement('div');
+            lab.className = 'slot-label';
+            lab.innerHTML = 'Photo ' + (idx + 1) + (idx === 0 ? ' <span style="color:var(--red)">*</span>' : ' <span class="opt">(optional)</span>');
+            cell.appendChild(lab);
+
+            if (has) {
+                var wrap = document.createElement('div');
+                wrap.className = 'img-preview-wrap show';
+                var im = document.createElement('img');
+                im.src = resolveImg(currentImages[idx]);
+                im.onerror = function () { im.style.display = 'none'; };
+                var rm = document.createElement('button');
+                rm.type = 'button'; rm.className = 'img-remove'; rm.textContent = '✕';
+                rm.addEventListener('click', function () {
+                    currentImages.splice(idx, 1);
+                    renderPhotoSlots();
+                });
+                wrap.appendChild(im); wrap.appendChild(rm);
+                cell.appendChild(wrap);
+            } else {
+                var drop = document.createElement('div');
+                drop.className = 'img-drop';
+                drop.innerHTML = '<div class="ic">📷</div><p><b>Add</b><br><span class="sub">JPG/PNG/WEBP</span></p>';
+                drop.addEventListener('click', function () { photoTarget = idx; photoInput.click(); });
+                drop.addEventListener('dragover', function (e) { e.preventDefault(); this.classList.add('drag'); });
+                drop.addEventListener('dragleave', function () { this.classList.remove('drag'); });
+                drop.addEventListener('drop', function (e) {
+                    e.preventDefault(); this.classList.remove('drag');
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) handleImageFile(e.dataTransfer.files[0], idx);
+                });
+                cell.appendChild(drop);
+            }
+            grid.appendChild(cell);
+        })(i);
+    }
+}
+
+photoInput.addEventListener('change', function () {
+    if (this.files && this.files[0]) handleImageFile(this.files[0], photoTarget);
+    this.value = '';
+});
+
+function handleImageFile(file, idx) {
+    if (!/^image\//.test(file.type)) { toast('Please choose an image file.', 'error'); return; }
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+        var img = new Image();
+        img.onload = function () {
+            var max = 900, w = img.width, h = img.height;
+            if (Math.max(w, h) > max) { var sc = max / Math.max(w, h); w = Math.round(w * sc); h = Math.round(h * sc); }
+            var canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+            var dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+            currentImages[idx] = dataUrl;
+            // compact: drop trailing empties
+            while (currentImages.length && !currentImages[currentImages.length - 1]) currentImages.pop();
+            renderPhotoSlots();
+            toast('Photo ' + (idx + 1) + ' ready 📷', 'success');
+        };
+        img.onerror = function () { toast('Could not read that image.', 'error'); };
+        img.src = ev.target.result;
+    };
+    reader.onerror = function () { toast('Could not read that file.', 'error'); };
+    reader.readAsDataURL(file);
+}
+
+/* ---------- export & reset ---------- */
+$('exportBtn').addEventListener('click', function () {
+    var data = JSON.stringify({ products: products }, null, 2);
+    var blob = new Blob([data], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'products.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 500);
+    toast('products.json downloaded ⬇', 'success');
+});
+
+$('resetBtn').addEventListener('click', function () {
+    pendingDeleteId = null;
+    $('cfTitle').textContent = 'Reset all products?';
+    $('cfText').textContent = 'This will remove your changes and restore the original 15-product catalog.';
+    $('cfOverlay').classList.add('show');
+    var confirmBtn = $('cfConfirm');
+    var handler = function () {
+        products = DEFAULT_PRODUCTS.slice();
+        saveStore();
+        resetFormState();
+        renderAll();
+        toast('Catalog restored to defaults ↺', 'success');
+        confirmBtn.removeEventListener('click', handler);
+        $('cfOverlay').classList.remove('show');
+    };
+    confirmBtn.addEventListener('click', handler);
+});
+
+/* ---------- boot ---------- */
+if (isAuthed()) {
+    showAdmin();
+}
+</script>
+</body>
+</html>

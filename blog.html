@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Read the Crystal Fashion journal for craftsmanship stories, sustainability insights, and the heritage behind every handcrafted collection from Nepal.">
+    <meta name="keywords" content="Crystal Fashion blog, handcrafted fashion journal, sustainable fashion Nepal, artisan stories, Nepal craftsmanship blog">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#c75d3a">
+    <meta property="og:title" content="Crystal Fashion Journal | Handcrafted Fashion Stories">
+    <meta property="og:description" content="Craftsmanship, sustainability, and culture behind our handcrafted collections from Nepal.">
+    <meta property="og:image" content="https://www.crystalfashionnepal.com/images/logo.png">
+    <meta property="og:url" content="https://www.crystalfashionnepal.com/blog.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.crystalfashionnepal.com/blog.html">
+    <link rel="manifest" href="site.webmanifest">
+    <title>Journal · Crystal Fashion</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: linear-gradient(180deg, #f9f4ee 0%, #fffdf9 100%); }
+        .journal-page { min-height: 100vh; }
+        .page-hero {
+            padding-top: 120px;
+            padding-bottom: 2.5rem;
+            background: linear-gradient(135deg, #2d1f17 0%, #3b281d 35%, #4f3528 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 15% 20%, rgba(212,165,116,0.18), transparent 24%), radial-gradient(circle at 85% 35%, rgba(199,93,58,0.22), transparent 20%);
+        }
+        .page-hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        .page-hero p { color: rgba(250,245,236,0.8); max-width: 720px; }
+        .page-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 4.4rem);
+            color: #fff;
+            margin: 0.5rem 0 1rem;
+            line-height: 1;
+        }
+        .page-hero-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.6rem; }
+        .journal-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.4rem 1.5rem 4rem;
+            display: grid;
+            grid-template-columns: 290px minmax(0,1fr);
+            gap: 1.5rem;
+        }
+        .journal-sidebar,
+        .journal-card {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .journal-sidebar {
+            padding: 1.25rem;
+            position: sticky;
+            top: 85px;
+            height: fit-content;
+        }
+        .journal-sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .category-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .category-pill {
+            border: 1px solid var(--border);
+            background: var(--ivory);
+            color: var(--brown-2);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 0.5rem 0.8rem;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .category-pill:hover, .category-pill.active {
+            background: linear-gradient(135deg, var(--terracotta), var(--terracotta-dark));
+            color: #fff;
+            border-color: transparent;
+        }
+        .journal-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 1.3rem;
+        }
+        .journal-card { background: #fff; }
+        .journal-card-image {
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            position: relative;
+            background: var(--ivory-warm);
+        }
+        .journal-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .journal-card:hover .journal-card-image img { transform: scale(1.06); }
+        .journal-card-content {
+            padding: 1.1rem 1rem 1.2rem;
+        }
+        .journal-tag {
+            display: inline-block;
+            background: rgba(199,93,58,0.09);
+            color: var(--terracotta);
+            border-radius: 999px;
+            padding: 0.35rem 0.7rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .journal-card h3 {
+            margin: 0.8rem 0 0.4rem;
+            font-size: clamp(1.3rem, 2vw, 1.8rem);
+            line-height: 1.2;
+        }
+        .journal-card p {
+            color: var(--brown-soft);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .journal-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--brown-soft);
+            border-top: 1px solid var(--border);
+            padding-top: 0.8rem;
+        }
+        .journal-btn {
+            color: var(--terracotta);
+            font-weight: 700;
+        }
+        @media (max-width: 900px) {
+            .journal-shell { grid-template-columns: 1fr; }
+            .journal-sidebar { position: static; }
+            .journal-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="journal-page luxury-page">
+    <header class="header sticky-header" id="mainHeader">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img-wrap">
+                    <img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img">
+                </div>
+                <span class="logo-text">Crystal Fashion</span>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="index.html#products" class="nav-link">Collection</a>
+                <a href="blog.html" class="nav-link active">Journal</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="page-hero-inner">
+                <div class="section-label" style="color: #f5c58c;">Journal</div>
+                <h1>Stories from our studio.</h1>
+                <p>Explore the craft, culture, and values behind every handmade piece. Our journal shares the stories, ideas, and sustainable philosophy that shape Crystal Fashion.</p>
+                <div class="page-hero-actions">
+                    <a href="index.html#products" class="btn btn-primary">Discover collection</a>
+                    <a href="contact.html" class="btn btn-secondary">Talk to us</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="journal-shell">
+            <aside class="journal-sidebar">
+                <h3>Browse topics</h3>
+                <div class="category-pills" id="categoryPills"></div>
+            </aside>
+
+            <div id="blogGrid" class="journal-grid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo-wrap">
+                        <img src="images/logo.png" alt="Crystal Fashion Logo" class="footer-logo">
+                    </div>
+                    <h3>Crystal Fashion</h3>
+                    <p class="footer-tagline">"Excellence, Creative, Craftsmanship"</p>
+                    <p class="footer-est">Est. 2009 · Kathmandu, Nepal 🇳🇵</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="index.html#products">Collection</a></li>
+                        <li><a href="blog.html">Journal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="cookies.html">Cookie Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li>📍 Kathmandu, Nepal</li>
+                        <li>📧 <a href="mailto:crystlfashionnp@gmail.com">crystlfashionnp@gmail.com</a></li>
+                        <li>💬 <a href="https://wa.me/9779704828728">+977 9704828728</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Crystal Fashion. All rights reserved.</p>
+                <p>Handcrafted with care in Kathmandu, Nepal 🇳🇵</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const categoryPills = document.getElementById('categoryPills');
+        const blogGrid = document.getElementById('blogGrid');
+        let allPosts = [];
+        let activeCategory = 'All';
+
+        function escHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
+        }
+
+        function getPosts() {
+            return fetch('data/blog.json')
+                .then(response => response.ok ? response.json() : { posts: [] })
+                .then(data => Array.isArray(data.posts) && data.posts.length ? data.posts : [
+                    { id: 1, title: 'The Art of Handcrafted Fashion', author: 'Crystal Fashion Team', date: '2024-05-20', image: 'https://sspark.genspark.ai/i/v0UCtUoskbbrCIbO?width=1200', excerpt: 'Craftsmanship that turns everyday essentials into heirlooms.', category: 'Craftsmanship' },
+                    { id: 2, title: 'Sustainable Fashion: Our Commitment', author: 'Crystal Fashion Team', date: '2024-05-15', image: 'https://sspark.genspark.ai/i/qp9JrcYgGCXPbRVQ?width=1200', excerpt: 'Thoughtful sourcing and a lighter footprint for a better future.', category: 'Sustainability' }
+                ]);
+        }
+
+        function renderFilters() {
+            const categories = ['All', ...new Set(allPosts.map(post => post.category).filter(Boolean))];
+            categoryPills.innerHTML = categories.map(category => `
+                <button class="category-pill ${activeCategory === category ? 'active' : ''}" data-category="${escHtml(category)}">${escHtml(category)}</button>
+            `).join('');
+
+            categoryPills.querySelectorAll('.category-pill').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    activeCategory = btn.dataset.category;
+                    renderFilters();
+                    renderPosts();
+                });
+            });
+        }
+
+        function renderPosts() {
+            const filtered = activeCategory === 'All' ? allPosts : allPosts.filter(post => post.category === activeCategory);
+            blogGrid.innerHTML = filtered.map(post => `
+                <article class="journal-card">
+                    <div class="journal-card-image">
+                        <img src="${escHtml(post.image || 'images/logo.png')}" alt="${escHtml(post.title)}" loading="lazy">
+                    </div>
+                    <div class="journal-card-content">
+                        <span class="journal-tag">${escHtml(post.category)}</span>
+                        <h3>${escHtml(post.title)}</h3>
+                        <p>${escHtml(post.excerpt || post.content || '')}</p>
+                        <div class="journal-meta">
+                            <span>${escHtml(post.author)} · ${escHtml(post.date)}</span>
+                            <a class="journal-btn" href="blog-post.html?id=${post.id}">Read story →</a>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+            getPosts().then(posts => {
+                allPosts = posts;
+                renderFilters();
+                renderPosts();
+            });
+
+            const menu = document.getElementById('navMenu');
+            const trigger = document.getElementById('mobileMenuBtn');
+            if (trigger && menu) {
+                trigger.addEventListener('click', () => {
+                    menu.classList.toggle('active');
+                    trigger.classList.toggle('open');
+                });
+            }
+
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => header && header.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+        });
+    </script>
+</body>
+</html>

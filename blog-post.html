@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#c75d3a">
+    <title>Blog Story · Crystal Fashion</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: #fffdf9; }
+        .story-page { padding-top: 90px; }
+        .story-wrap {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+        .story-breadcrumb {
+            font-size: 0.85rem;
+            color: var(--brown-soft);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.4rem;
+        }
+        .story-breadcrumb a { color: var(--terracotta); font-weight: 700; }
+        .story-article {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .story-image {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            background: var(--ivory-warm);
+        }
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .story-content {
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .story-meta {
+            color: var(--brown-soft);
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+        .story-content h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.05;
+            margin-bottom: 1rem;
+        }
+        .story-author {
+            color: var(--brown-soft);
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .story-author strong { color: var(--brown); }
+        .story-body {
+            color: var(--brown-2);
+            font-size: 1.04rem;
+            line-height: 1.9;
+        }
+        .story-body p {
+            margin-bottom: 1.3rem;
+        }
+        .story-related {
+            margin-top: 2.3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .story-related h2 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+        .story-related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0,1fr));
+            gap: 1rem;
+        }
+        .story-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        .story-card img {
+            width: 100%;
+            aspect-ratio: 16/10;
+            object-fit: cover;
+        }
+        .story-card-body {
+            padding: 0.9rem 0.8rem 1rem;
+        }
+        .story-card-body h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.3rem;
+        }
+        .story-card-body p {
+            color: var(--brown-soft);
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        @media (max-width: 800px) {
+            .story-related-grid { grid-template-columns: 1fr; }
+            .story-image { height: 300px; }
+        }
+    </style>
+</head>
+<body class="story-page luxury-page">
+    <header class="header sticky-header" id="mainHeader">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img-wrap"><img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img"></div>
+                <span class="logo-text">Crystal Fashion</span>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="index.html#products" class="nav-link">Collection</a>
+                <a href="blog.html" class="nav-link active">Journal</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <main class="story-wrap">
+        <div class="story-breadcrumb">
+            <a href="index.html">Home</a>
+            <span>›</span>
+            <a href="blog.html">Journal</a>
+            <span>›</span>
+            <span id="crumbTitle">Story</span>
+        </div>
+
+        <article id="storyArticle" class="story-article"></article>
+    </main>
+
+    <script>
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
+        }
+
+        async function loadStory() {
+            const params = new URLSearchParams(window.location.search);
+            const id = Number(params.get('id')) || 1;
+            const article = document.getElementById('storyArticle');
+            try {
+                const response = await fetch('data/blog.json');
+                const data = response.ok ? await response.json() : { posts: [] };
+                const posts = Array.isArray(data.posts) && data.posts.length ? data.posts : [
+                    { id: 1, title: 'The Art of Handcrafted Fashion', author: 'Crystal Fashion Team', date: '2024-05-20', image: 'https://sspark.genspark.ai/i/v0UCtUoskbbrCIbO?width=1200', excerpt: 'Craftsmanship that turns everyday essentials into heirlooms.', content: 'Handcrafted fashion is about care, time, and human attention — all the qualities that make an item feel personal and lasting.', category: 'Craftsmanship' }
+                ];
+                const post = posts.find(p => Number(p.id) === id) || posts[0];
+                const related = posts.filter(p => Number(p.id) !== Number(post.id)).slice(0, 3);
+                document.title = `${post.title} · Crystal Fashion`;
+                document.getElementById('crumbTitle').textContent = post.title;
+                article.innerHTML = `
+                    <div class="story-image">
+                        <img src="${escapeHtml(post.image || 'images/logo.png')}" alt="${escapeHtml(post.title)}">
+                    </div>
+                    <div class="story-content">
+                        <div class="story-meta">${escapeHtml(post.category)} · ${escapeHtml(post.date)}</div>
+                        <h1>${escapeHtml(post.title)}</h1>
+                        <div class="story-author"><strong>${escapeHtml(post.author)}</strong> · <span>Crystal Fashion Journal</span></div>
+                        <div class="story-body">${(post.content || '').split('\n\n').map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('')}</div>
+                        <div class="story-related">
+                            <h2>More stories</h2>
+                            <div class="story-related-grid">
+                                ${related.map(item => `
+                                    <a class="story-card" href="blog-post.html?id=${item.id}">
+                                        <img src="${escapeHtml(item.image || 'images/logo.png')}" alt="${escapeHtml(item.title)}">
+                                        <div class="story-card-body">
+                                            <h3>${escapeHtml(item.title)}</h3>
+                                            <p>${escapeHtml(item.excerpt || item.category || '')}</p>
+                                        </div>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch {
+                article.innerHTML = '<div class="story-content"><h1>We could not load this story.</h1><p>Please return to the journal and try again.</p><a href="blog.html" class="btn btn-primary">Back to journal</a></div>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const menu = document.getElementById('navMenu');
+            const trigger = document.getElementById('mobileMenuBtn');
+            if (trigger && menu) {
+                trigger.addEventListener('click', () => {
+                    menu.classList.toggle('active');
+                    trigger.classList.toggle('open');
+                });
+            }
+            const header = document.getElementById('mainHeader');
+            window.addEventListener('scroll', () => header && header.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+            loadStory();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Hemp Tote Bag - Eco Friendly",
+      "price": 2500,
+      "image": "hemp-tote-1.jpg",
+      "category": "Tote",
+      "description": "Spacious and durable tote bag crafted from sustainable hemp fabric. Perfect for everyday use with multiple compartments for organized storage. Features reinforced handles and a natural aesthetic."
+    },
+    {
+      "id": 2,
+      "name": "Leather Crossbody Satchel",
+      "price": 6800,
+      "image": "leather-crossbody.jpg",
+      "category": "Side Bag",
+      "description": "Authentic leather crossbody bag with traditional craftsmanship. Features genuine Nepali leather with a rich, aged patina. Perfect for daily commute or travel with adjustable shoulder strap."
+    },
+    {
+      "id": 3,
+      "name": "Cotton Canvas Backpack",
+      "price": 3500,
+      "image": "cotton-backpack.jpg",
+      "category": "Hemps",
+      "description": "Lightweight and versatile backpack made from organic cotton canvas. Ideal for travel, work, or everyday adventures. Water-resistant coating and multiple pockets for functionality."
+    },
+    {
+      "id": 4,
+      "name": "Traditional Dhaka Hobo Bag",
+      "price": 2800,
+      "image": "dhaka-hobo.jpg",
+      "category": "Hobo",
+      "description": "Authentic Dhaka weave hobo bag featuring traditional patterns. A celebration of Nepali textile heritage. Soft and supple leather base with intricate hand-woven details."
+    },
+    {
+      "id": 5,
+      "name": "Organic Cotton Trousers",
+      "price": 3200,
+      "image": "cotton-trousers.jpg",
+      "category": "Trousers",
+      "description": "Premium organic cotton trousers with a modern cut. Breathable, durable, and perfect for any season. Available in multiple sizes with comfortable elastic waistband."
+    },
+    {
+      "id": 6,
+      "name": "Hemp-Linen Blend Pants",
+      "price": 4200,
+      "image": "hemp-linen-pants.jpg",
+      "category": "Trousers",
+      "description": "Lightweight blend of hemp and linen for ultimate comfort. Perfect for warm climates with a natural, elegant look. Sustainable fabric sourced responsibly."
+    },
+    {
+      "id": 7,
+      "name": "Tailored Wool Trousers",
+      "price": 5500,
+      "image": "wool-trousers.jpg",
+      "category": "Trousers",
+      "description": "Finely tailored wool trousers with impeccable craftsmanship. Sophisticated and timeless design for the modern professional. Premium quality fabric with excellent durability."
+    },
+    {
+      "id": 8,
+      "name": "Handblock Print Wrap",
+      "price": 2200,
+      "image": "handblock-wrap.jpg",
+      "category": "Hemps",
+      "description": "Traditional handblock printed wrap featuring intricate designs. Versatile piece perfect for any occasion. Can be worn as a shawl, scarf, or beach cover-up."
+    },
+    {
+      "id": 9,
+      "name": "Himalayan Wool Scarf",
+      "price": 2800,
+      "image": "wool-scarf.jpg",
+      "category": "Hemps",
+      "description": "Soft and warm wool scarf handwoven in the Himalayan region. Timeless elegance with exceptional quality. Perfect for adding a touch of warmth and style to any outfit."
+    },
+    {
+      "id": 10,
+      "name": "Embroidered Clutch",
+      "price": 1800,
+      "image": "embroidered-clutch.jpg",
+      "category": "Hobo",
+      "description": "Beautifully embroidered clutch with traditional Nepali motifs. Perfect for evening events or special occasions. Handcrafted with meticulous attention to detail."
+    },
+    {
+      "id": 11,
+      "name": "Natural Fiber Belt",
+      "price": 1200,
+      "image": "fiber-belt.jpg",
+      "category": "Hemps",
+      "description": "Handcrafted belt made from natural fibers. Simple yet elegant, complementing any outfit perfectly. Eco-friendly and sustainable choice."
+    },
+    {
+      "id": 12,
+      "name": "Premium Travel Duffel",
+      "price": 7500,
+      "image": "travel-duffel.jpg",
+      "category": "Tote",
+      "description": "Large capacity duffel bag crafted from premium leather. Perfect for extended travels with multiple storage compartments. Reinforced handles and durable construction."
+    },
+    {
+      "id": 13,
+      "name": "Vintage Canvas Messenger Bag",
+      "price": 4500,
+      "image": "canvas-messenger.jpg",
+      "category": "Side Bag",
+      "description": "Classic canvas messenger bag with vintage appeal. Spacious main compartment and multiple pockets. Perfect for work, school, or casual outings."
+    },
+    {
+      "id": 14,
+      "name": "Sustainable Tote with Pocket",
+      "price": 2900,
+      "image": "sustainable-tote.jpg",
+      "category": "Tote",
+      "description": "Eco-friendly tote bag made from recycled materials. Features inner pocket for secure storage. Durable and stylish for everyday use."
+    },
+    {
+      "id": 15,
+      "name": "Festival Hobo Bag",
+      "price": 3100,
+      "image": "festival-hobo.jpg",
+      "category": "Hobo",
+      "description": "Colorful festival hobo bag perfect for outdoor events. Made with sustainable fabrics and traditional craftsmanship. Roomy interior with adjustable strap."
+    }
+  ]
+}

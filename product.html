@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore handcrafted Crystal Fashion products including hemp totes, leather bags, accessories, and statement fashion essentials from Kathmandu, Nepal.">
+    <meta name="keywords" content="Crystal Fashion products, hemp tote bag Nepal, handmade leather bags, wholesale fashion product, Nepali handcrafted accessories">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#c75d3a">
+    <meta property="og:title" content="Crystal Fashion Product Collection | Handcrafted Nepal Fashion">
+    <meta property="og:description" content="Premium handcrafted fashion products and accessories designed by artisans in Nepal.">
+    <meta property="og:image" content="https://www.crystalfashionnepal.com/images/logo.png">
+    <meta property="og:url" content="https://www.crystalfashionnepal.com/product.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://www.crystalfashionnepal.com/product.html">
+    <link rel="manifest" href="site.webmanifest">
+    <title>Product · Crystal Fashion</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .pd-wrap { max-width: 1100px; margin: 0 auto; padding: 7.5rem 1.5rem 4rem; }
+        .pd-crumb { font-size: .85rem; color: var(--brown-soft); margin-bottom: 1.6rem; }
+        .pd-crumb a { color: var(--terracotta); text-decoration: none; font-weight: 600; }
+        .pd-crumb a:hover { text-decoration: underline; }
+
+        .pd-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 2.6rem; align-items: start; }
+        @media (max-width: 860px) { .pd-grid { grid-template-columns: 1fr; gap: 1.8rem; } .pd-wrap { padding-top: 6.2rem; } }
+
+        .pd-main { border-radius: 18px; overflow: hidden; background: var(--ivory-warm); border: 1px solid var(--ivory-deep); aspect-ratio: 1/1; box-shadow: 0 14px 34px rgba(45,31,23,.10); display: flex; align-items: center; justify-content: center; }
+        .pd-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .pd-main .pd-noimg { font-size: 5rem; }
+        .pd-thumbs { display: flex; gap: .7rem; margin-top: .8rem; }
+        .pd-thumb { width: 88px; height: 88px; border-radius: 12px; overflow: hidden; border: 2.5px solid var(--ivory-deep); cursor: pointer; padding: 0; background: var(--ivory-warm); transition: border-color .2s, transform .2s; }
+        .pd-thumb:hover { transform: translateY(-2px); }
+        .pd-thumb.active { border-color: var(--terracotta); }
+        .pd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .pd-cat { display: inline-block; background: var(--ivory-deep); color: var(--brown-2); border-radius: 20px; padding: .28rem .95rem; font-size: .74rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+        .pd-name { font-family: 'Playfair Display', serif; font-size: 2.1rem; margin: .85rem 0 .4rem; color: var(--brown); line-height: 1.2; }
+        .pd-price { font-size: 1.8rem; font-weight: 700; color: var(--terracotta); margin-bottom: 1.1rem; }
+        .pd-desc { color: var(--brown-soft); line-height: 1.85; margin-bottom: 1.5rem; font-size: .98rem; }
+        .pd-trust { display: flex; gap: 1.3rem; flex-wrap: wrap; margin: 0 0 1.7rem; font-size: .83rem; color: var(--brown-soft); }
+
+        .inq-btn { display: inline-flex; align-items: center; gap: .6rem; background: #25d366; color: #fff; padding: .95rem 2.1rem; border-radius: 40px; font-weight: 700; font-size: 1.02rem; text-decoration: none; box-shadow: 0 10px 24px rgba(37,211,102,.35); transition: transform .2s, box-shadow .2s; }
+        .inq-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(37,211,102,.45); }
+        .pd-back { display: inline-block; margin-top: 1.5rem; color: var(--brown-soft); text-decoration: none; font-size: .88rem; font-weight: 500; }
+        .pd-back:hover { color: var(--terracotta); }
+
+        .pd-related { margin-top: 4rem; }
+        .pd-related h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown); }
+        .rel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 1.2rem; margin-top: 1.3rem; }
+        .rel-card { background: #fff; border: 1px solid var(--ivory-deep); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .2s, box-shadow .2s; display: block; }
+        .rel-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(45,31,23,.12); }
+        .rel-card .ri { aspect-ratio: 1/1; background: var(--ivory-warm); display: flex; align-items: center; justify-content: center; font-size: 2.4rem; }
+        .rel-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .rel-card .rb { padding: .85rem 1rem; }
+        .rel-card .rn { font-weight: 600; font-size: .9rem; color: var(--brown); }
+        .rel-card .rp { color: var(--terracotta); font-weight: 700; font-size: .86rem; margin-top: .25rem; }
+
+        .pd-notfound { text-align: center; padding: 3.5rem 1rem; }
+        .pd-notfound h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: .6rem; }
+        .pd-notfound p { color: var(--brown-soft); margin-bottom: 1.5rem; }
+
+        .pd-footer-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="header sticky-header" id="mainHeader">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-img-wrap">
+                    <img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img">
+                </div>
+                <span class="logo-text">Crystal Fashion</span>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#products" class="nav-link">Products</a>
+                <a href="index.html#blog" class="nav-link">Blog</a>
+                <a href="index.html#connect" class="nav-link">Connect</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">💬 WhatsApp</a>
+                <a href="admin.html" class="nav-admin" title="Admin Panel" aria-label="Admin Panel">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                </a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="pd-wrap">
+        <nav class="pd-crumb">
+            <a href="index.html">Home</a> &nbsp;/&nbsp;
+            <a href="index.html#products">Products</a> &nbsp;/&nbsp;
+            <span id="crumbName">Product</span>
+        </nav>
+
+        <div id="pdContent"></div>
+
+        <section class="pd-related" id="pdRelated" style="display:none;">
+            <h2>You may also like</h2>
+            <div class="rel-grid" id="relGrid"></div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="pd-footer-inner">
+            <div class="footer-legal-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="cookies.html">Cookie Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="index.html#about">About</a>
+                <a href="admin.html" class="footer-admin-link">⚙ Admin</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span id="year"></span> Crystal Fashion. All rights reserved.</p>
+                <p>Handcrafted with care in Kathmandu, Nepal 🇳🇵</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products-data.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        function $(id) { return document.getElementById(id); }
+        function esc(s) {
+            if (s === null || s === undefined) return '';
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+        function resolveImg(image) {
+            if (!image) return '';
+            if (/^(data:|https?:|blob:)/i.test(image)) return image;
+            return 'images/products/' + image;
+        }
+
+        /* Load products: admin-saved list -> products.json -> built-in fallback */
+        function getProducts() {
+            var stored = null;
+            try { stored = JSON.parse(localStorage.getItem('cf_products') || 'null'); } catch (e) { stored = null; }
+            if (Array.isArray(stored) && stored.length) return Promise.resolve(stored);
+            return fetch('data/products.json')
+                .then(function (r) { if (!r.ok) throw new Error('fail'); return r.json(); })
+                .then(function (d) {
+                    return (Array.isArray(d.products) && d.products.length) ? d.products : CF_PRODUCTS_FALLBACK;
+                })
+                .catch(function () { return CF_PRODUCTS_FALLBACK; });
+        }
+
+        var params = new URLSearchParams(location.search);
+        var wantedId = parseInt(params.get('id'), 10);
+
+        getProducts().then(function (products) {
+            var p = null;
+            for (var i = 0; i < products.length; i++) {
+                if (Number(products[i].id) === wantedId) { p = products[i]; break; }
+            }
+
+            if (!p) {
+                document.title = 'Product not found · Crystal Fashion';
+                $('crumbName').textContent = 'Not found';
+                $('pdContent').innerHTML =
+                    '<div class="pd-notfound">' +
+                        '<div style="font-size:3.5rem;">🛍️</div>' +
+                        '<h1>Product not found</h1>' +
+                        '<p>This product may have been removed or the link is incorrect.</p>' +
+                        '<a href="index.html#products" class="inq-btn" style="background:var(--terracotta);box-shadow:0 10px 24px rgba(199,93,58,.35);">← Browse all products</a>' +
+                    '</div>';
+                return;
+            }
+
+            document.title = p.name + ' · Crystal Fashion';
+            $('crumbName').textContent = p.name;
+
+            /* ----- photo section: up to 5 photos ----- */
+            var raw = (Array.isArray(p.images) && p.images.length) ? p.images : [p.image, p.image2];
+            var photos = raw.filter(function (x) { return !!x; }).slice(0,5).map(resolveImg);
+
+            var galleryHtml;
+            if (photos.length) {
+                galleryHtml =
+                    '<div class="pd-gallery">' +
+                        '<div class="pd-main"><img id="pdMainImg" src="' + esc(photos[0]) + '" alt="' + esc(p.name) + '" onerror="this.parentElement.innerHTML=\'<div class=&quot;pd-noimg&quot;>🛍️</div>\'"></div>' +
+                        (photos.length > 1
+                            ? '<div class="pd-thumbs">' + photos.map(function (src, i) {
+                                return '<button class="pd-thumb' + (i === 0 ? ' active' : '') + '" data-src="' + esc(src) + '" aria-label="Photo ' + (i + 1) + '"><img src="' + esc(src) + '" alt=""></button>';
+                              }).join('') + '</div>'
+                            : '') +
+                    '</div>';
+            } else {
+                galleryHtml = '<div class="pd-gallery"><div class="pd-main"><div class="pd-noimg">🛍️</div></div></div>';
+            }
+
+            var waText = encodeURIComponent("Hi Crystal Fashion! I'm interested in the " + p.name + " (NPR " + Number(p.price).toLocaleString() + "). Could you share more details?");
+            var waLink = 'https://wa.me/9779704828728?text=' + waText;
+
+            $('pdContent').innerHTML =
+                '<div class="pd-grid">' +
+                    galleryHtml +
+                    '<div class="pd-info">' +
+                        '<span class="pd-cat">' + esc(p.category || 'Handcrafted') + '</span>' +
+                        '<h1 class="pd-name">' + esc(p.name) + '</h1>' +
+                        '<div class="pd-price">NPR ' + Number(p.price).toLocaleString() + ' <span style="font-size:.85rem;font-weight:500;color:var(--brown-soft);">/ piece</span></div>' +
+                        '<div class="pd-wholesale">🏷️ <span>Wholesale Only &nbsp;·&nbsp; <span class="moq-big">Minimum Order: 50 pieces</span></span></div>' +
+                        '<p class="pd-desc">' + esc(p.description || 'A beautiful handcrafted piece from Crystal Fashion, made with care in Kathmandu, Nepal.') + '</p>' +
+                        '<div class="pd-trust">' +
+                            '<span>✋ 100% Handmade</span>' +
+                            '<span>🌿 Sustainable materials</span>' +
+                            '<span>🇳🇵 Made in Nepal</span>' +
+                            '<span>📦 MOQ 50 pcs</span>' +
+                        '</div>' +
+                        '<a class="inq-btn" href="' + waLink + '" target="_blank" rel="noopener">💬 Inquire Now on WhatsApp</a>' +
+                        '<br><a href="index.html#products" class="pd-back">← Back to all products</a>' +
+                    '</div>' +
+                '</div>';
+
+            /* thumbnail switching */
+            var thumbs = document.querySelectorAll('.pd-thumb');
+            thumbs.forEach(function (t) {
+                t.addEventListener('click', function () {
+                    thumbs.forEach(function (x) { x.classList.remove('active'); });
+                    this.classList.add('active');
+                    var main = $('pdMainImg');
+                    if (main) main.src = this.getAttribute('data-src');
+                });
+            });
+
+            /* ----- related products (same category) ----- */
+            var related = products.filter(function (x) {
+                return Number(x.id) !== wantedId && x.category === p.category;
+            }).slice(0, 4);
+            if (!related.length) {
+                related = products.filter(function (x) { return Number(x.id) !== wantedId; }).slice(0, 4);
+            }
+            if (related.length) {
+                $('pdRelated').style.display = 'block';
+                $('relGrid').innerHTML = related.map(function (r) {
+                    var src = resolveImg(r.image);
+                    return '<a class="rel-card" href="product.html?id=' + r.id + '">' +
+                        '<div class="ri">' + (src ? '<img src="' + esc(src) + '" alt="' + esc(r.name) + '" loading="lazy" onerror="this.outerHTML=\'🛍️\'">' : '🛍️') + '</div>' +
+                        '<div class="rb"><div class="rn">' + esc(r.name) + '</div><div class="rp">NPR ' + Number(r.price).toLocaleString() + '</div></div>' +
+                    '</a>';
+                }).join('');
+            }
+        });
+
+        /* header / footer helpers */
+        $('year').textContent = new Date().getFullYear();
+        var mb = $('mobileMenuBtn'), mn = $('navMenu');
+        if (mb && mn) {
+            mb.addEventListener('click', function () {
+                mn.classList.toggle('active');
+                mb.classList.toggle('open');
+            });
+        }
+        window.addEventListener('scroll', function () {
+            var h = $('mainHeader');
+            if (h) h.classList.toggle('scrolled', window.scrollY > 50);
+        }, { passive: true });
+    })();
+    </script>
+</body>
+</html>
