@@ -4,6 +4,8 @@
 
 let allProducts = [];
 let allBlogPosts = [];
+let mobileProductsExpanded = false;
+let mobileBlogExpanded = false;
 
 /* ---------- Built-in fallback data ----------
    Ensures the site works even when opened directly
@@ -78,7 +80,12 @@ function renderProducts(list) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
     if (!list.length) { grid.innerHTML = '<div class="no-results">No products found.</div>'; return; }
-    grid.innerHTML = list.map((p, i) => {
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const showAll = !isMobile || mobileProductsExpanded || list.length <= 4;
+    const visibleList = showAll ? list : list.slice(0, 4);
+
+    grid.innerHTML = visibleList.map((p, i) => {
         const src = imgSrc(p.image, 'products');
         return `
         <div class="product-card fade-in" style="animation-delay:${i * 0.07}s" onclick="window.location.href='product.html?id=${p.id}'">
@@ -102,6 +109,20 @@ function renderProducts(list) {
             </div>
         </div>`;
     }).join('');
+
+    if (isMobile && list.length > 4) {
+        const buttonLabel = mobileProductsExpanded ? 'Show less' : 'Explore more';
+        grid.insertAdjacentHTML('beforeend', `
+            <div class="mobile-expand-row">
+                <button type="button" class="mobile-expand-btn" data-target="products">${buttonLabel}</button>
+            </div>
+        `);
+        grid.querySelector('.mobile-expand-btn').addEventListener('click', () => {
+            mobileProductsExpanded = !mobileProductsExpanded;
+            renderProducts(list);
+        });
+    }
+
     triggerFadeIn();
 }
 
@@ -196,7 +217,12 @@ async function loadBlogPosts() {
 function renderBlog(posts) {
     const grid = document.getElementById('blogGrid');
     if (!grid) return;
-    grid.innerHTML = posts.map((p, i) => {
+
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const showAll = !isMobile || mobileBlogExpanded || posts.length <= 4;
+    const visiblePosts = showAll ? posts : posts.slice(0, 4);
+
+    grid.innerHTML = visiblePosts.map((p, i) => {
         const src = imgSrc(p.image, 'backgrounds');
         return `
         <article class="blog-card fade-in" style="animation-delay:${i * 0.08}s" onclick="openBlogModal(${p.id})">
@@ -214,6 +240,20 @@ function renderBlog(posts) {
             </div>
         </article>`;
     }).join('');
+
+    if (isMobile && posts.length > 4) {
+        const buttonLabel = mobileBlogExpanded ? 'Show less' : 'Explore more';
+        grid.insertAdjacentHTML('beforeend', `
+            <div class="mobile-expand-row">
+                <button type="button" class="mobile-expand-btn" data-target="blog">${buttonLabel}</button>
+            </div>
+        `);
+        grid.querySelector('.mobile-expand-btn').addEventListener('click', () => {
+            mobileBlogExpanded = !mobileBlogExpanded;
+            renderBlog(posts);
+        });
+    }
+
     triggerFadeIn();
 }
 
