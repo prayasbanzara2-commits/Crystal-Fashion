@@ -423,18 +423,82 @@ function setupHeader() {
 
 // ---- Active Nav Link ----
 function setupNavActiveLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const links = document.querySelectorAll('.nav-link');
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                links.forEach(l => l.classList.remove('active'));
-                const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-                if (active) active.classList.add('active');
+    const sections = [...document.querySelectorAll('section[id]')];
+    const links = [...document.querySelectorAll('.nav-link')];
+    let clickedNavId = null;
+
+    const setActiveLink = (id) => {
+        if (!id) return;
+        links.forEach(l => {
+            const match = l.getAttribute('href') === `#${id}`;
+            l.classList.toggle('active', match);
+        });
+    };
+
+    const isSectionInView = (id) => {
+        const section = document.getElementById(id);
+        if (!section) return false;
+        const rect = section.getBoundingClientRect();
+        return rect.top <= window.innerHeight * 0.6 && rect.bottom >= window.innerHeight * 0.25;
+    };
+
+    const getClosestVisibleSection = () => {
+        let bestId = sections[0]?.id || '';
+        let bestDistance = Number.POSITIVE_INFINITY;
+        const center = window.innerHeight * 0.45;
+
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const distance = Math.abs(rect.top - center);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                bestId = section.id;
             }
         });
-    }, { threshold: 0.4 });
-    sections.forEach(s => obs.observe(s));
+
+        return bestId;
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (clickedNavId && isSectionInView(clickedNavId)) {
+            setActiveLink(clickedNavId);
+            return;
+        }
+
+        if (visible.length > 0) {
+            const currentId = visible[0].target.id;
+            if (isSectionInView(currentId)) {
+                setActiveLink(currentId);
+                return;
+            }
+        }
+
+        const fallbackId = getClosestVisibleSection();
+        if (fallbackId) setActiveLink(fallbackId);
+    }, { threshold: [0.2, 0.5, 0.75], rootMargin: '0px 0px -10% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            const href = link.getAttribute('href');
+            const id = href ? href.replace('#', '') : '';
+            clickedNavId = id || null;
+            if (id) setActiveLink(id);
+        });
+    });
+
+    window.addEventListener('hashchange', () => {
+        const hashId = location.hash.replace('#', '');
+        if (hashId) {
+            clickedNavId = hashId;
+            setActiveLink(hashId);
+        }
+    });
 }
 
 // ---- Helpers ----
