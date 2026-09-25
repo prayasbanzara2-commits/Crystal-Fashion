@@ -157,16 +157,28 @@
             return String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
         }
 
+        function getStoredPosts() {
+            try {
+                const stored = JSON.parse(localStorage.getItem('cf_blog_posts') || 'null');
+                if (Array.isArray(stored) && stored.length) return stored;
+            } catch (e) {}
+            return [];
+        }
+
         async function loadStory() {
             const params = new URLSearchParams(window.location.search);
             const id = Number(params.get('id')) || 1;
             const article = document.getElementById('storyArticle');
             try {
-                const response = await fetch('data/blog.json');
-                const data = response.ok ? await response.json() : { posts: [] };
-                const posts = Array.isArray(data.posts) && data.posts.length ? data.posts : [
-                    { id: 1, title: 'The Art of Handcrafted Fashion', author: 'Crystal Fashion Team', date: '2024-05-20', image: 'https://sspark.genspark.ai/i/v0UCtUoskbbrCIbO?width=1200', excerpt: 'Craftsmanship that turns everyday essentials into heirlooms.', content: 'Handcrafted fashion is about care, time, and human attention — all the qualities that make an item feel personal and lasting.', category: 'Craftsmanship' }
-                ];
+                const stored = getStoredPosts();
+                let posts = stored;
+                if (!posts.length) {
+                    const response = await fetch('data/blog.json');
+                    const data = response.ok ? await response.json() : { posts: [] };
+                    posts = Array.isArray(data.posts) && data.posts.length ? data.posts : [
+                        { id: 1, title: 'The Art of Handcrafted Fashion', author: 'Crystal Fashion Team', date: '2024-05-20', image: 'https://sspark.genspark.ai/i/v0UCtUoskbbrCIbO?width=1200', excerpt: 'Craftsmanship that turns everyday essentials into heirlooms.', content: 'Handcrafted fashion is about care, time, and human attention — all the qualities that make an item feel personal and lasting.', category: 'Craftsmanship' }
+                    ];
+                }
                 const post = posts.find(p => Number(p.id) === id) || posts[0];
                 const related = posts.filter(p => Number(p.id) !== Number(post.id)).slice(0, 3);
                 document.title = `${post.title} · Crystal Fashion`;

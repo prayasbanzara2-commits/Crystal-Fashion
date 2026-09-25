@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit a story idea for review to Crystal Fashion's journal.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#c75d3a">
+    <title>Submit a Story · Crystal Fashion</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: linear-gradient(180deg, #f9f4ee 0%, #fffdf9 100%); }
+        .submit-page { min-height: 100vh; padding-top: 92px; }
+        .submit-wrap {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 0 1.25rem 3rem;
+        }
+        .submit-card {
+            background: rgba(255,255,255,0.96);
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            box-shadow: var(--shadow-md);
+            padding: clamp(1.4rem, 3vw, 2.4rem);
+        }
+        .submit-card h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin: 0.5rem 0 0.8rem;
+        }
+        .submit-card p { color: var(--brown-soft); line-height: 1.7; }
+        .submit-form {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .field { display: grid; gap: 0.45rem; }
+        .field label {
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--brown-2);
+        }
+        .field input, .field textarea {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            background: var(--ivory);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+            font: inherit;
+            color: var(--brown);
+        }
+        .field input:focus, .field textarea:focus {
+            outline: none;
+            border-color: var(--terracotta);
+            background: #fff;
+        }
+        .field textarea { min-height: 160px; resize: vertical; }
+        .submit-row {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .submit-status {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.9rem 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .submit-status.show { display: block; }
+        .submit-status.success {
+            background: rgba(46,125,79,0.1);
+            color: #1f5f3d;
+            border: 1px solid rgba(46,125,79,0.25);
+        }
+        .submit-status.error {
+            background: rgba(179,57,46,0.08);
+            color: #9a2e25;
+            border: 1px solid rgba(179,57,46,0.2);
+        }
+        @media (max-width: 700px) {
+            .submit-page { padding-top: 84px; }
+            .submit-card { padding: 1.2rem 1rem; }
+            .submit-row { flex-direction: column; }
+            .submit-row .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body class="submit-page luxury-page">
+    <header class="header sticky-header" id="mainHeader">
+        <div class="header-container">
+            <a href="index.html#home" class="logo">
+                <div class="logo-img-wrap"><img src="images/logo.png" alt="Crystal Fashion Logo" class="logo-img"></div>
+                <span class="logo-text">Crystal Fashion</span>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#products" class="nav-link">Collection</a>
+                <a href="blog.html" class="nav-link active">Journal</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <main class="submit-wrap">
+        <section class="submit-card">
+            <div class="section-label" style="color: var(--terracotta);">Community</div>
+            <h1>Submit a story</h1>
+            <p>Share a customer story, craftsmanship moment, or local inspiration with us. Your idea will be reviewed by the admin team before it appears on the website.</p>
+
+            <form id="blogSubmitForm" class="submit-form">
+                <div class="field">
+                    <label for="guestName">Your name</label>
+                    <input id="guestName" type="text" maxlength="80" placeholder="Enter your name" required>
+                </div>
+                <div class="field">
+                    <label for="guestTitle">Story title</label>
+                    <input id="guestTitle" type="text" maxlength="120" placeholder="Give your story a title" required>
+                </div>
+                <div class="field">
+                    <label for="guestCategory">Category</label>
+                    <input id="guestCategory" type="text" maxlength="40" placeholder="e.g. Craftsmanship, Sustainability, Community" required>
+                </div>
+                <div class="field">
+                    <label for="guestStory">Your story</label>
+                    <textarea id="guestStory" maxlength="4000" placeholder="Tell us your story or idea..." required></textarea>
+                </div>
+                <div class="submit-row">
+                    <button type="submit" class="btn btn-primary">Send for review</button>
+                    <a href="blog.html" class="btn btn-secondary">Back to Journal</a>
+                </div>
+            </form>
+
+            <div id="submitStatus" class="submit-status"></div>
+        </section>
+    </main>
+
+    <script>
+        const SUBMISSIONS_KEY = 'cf_blog_submissions';
+
+        function loadSubmissions() {
+            try {
+                const stored = JSON.parse(localStorage.getItem(SUBMISSIONS_KEY) || 'null');
+                return Array.isArray(stored) ? stored : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveSubmissions(list) {
+            localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(list));
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const menu = document.getElementById('navMenu');
+            const trigger = document.getElementById('mobileMenuBtn');
+            const header = document.getElementById('mainHeader');
+
+            if (trigger && menu) {
+                trigger.addEventListener('click', function () {
+                    menu.classList.toggle('active');
+                    trigger.classList.toggle('open');
+                });
+            }
+
+            if (header) {
+                window.addEventListener('scroll', function () {
+                    header.classList.toggle('scrolled', window.scrollY > 50);
+                }, { passive: true });
+            }
+
+            const form = document.getElementById('blogSubmitForm');
+            const statusBox = document.getElementById('submitStatus');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const author = document.getElementById('guestName').value.trim();
+                const title = document.getElementById('guestTitle').value.trim();
+                const category = document.getElementById('guestCategory').value.trim();
+                const content = document.getElementById('guestStory').value.trim();
+
+                if (!author || !title || !category || !content) {
+                    statusBox.className = 'submit-status show error';
+                    statusBox.textContent = 'Please fill in every field before submitting.';
+                    return;
+                }
+
+                const submissions = loadSubmissions();
+                const entry = {
+                    id: Date.now(),
+                    title: title,
+                    author: author,
+                    category: category,
+                    date: new Date().toISOString().slice(0, 10),
+                    image: '',
+                    excerpt: content.slice(0, 180) + (content.length > 180 ? '...' : ''),
+                    content: content
+                };
+
+                submissions.unshift(entry);
+                saveSubmissions(submissions);
+
+                statusBox.className = 'submit-status show success';
+                statusBox.textContent = 'Your submission has been sent for admin approval. We will review it soon.';
+                form.reset();
+            });
+        });
+    </script>
+    <script src="js/cookie-consent.js"></script>
+</body>
+</html>

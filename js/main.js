@@ -168,12 +168,25 @@ function closeProductModal() {
 }
 
 // ---- Blog ----
+function getStoredBlogPosts() {
+    try {
+        const stored = JSON.parse(localStorage.getItem('cf_blog_posts') || 'null');
+        if (Array.isArray(stored) && stored.length) return stored;
+    } catch (e) {}
+    return [];
+}
+
 async function loadBlogPosts() {
     try {
-        const r = await fetch('data/blog.json');
-        if (!r.ok) throw new Error('Failed to load');
-        const data = await r.json();
-        allBlogPosts = Array.isArray(data.posts) && data.posts.length ? data.posts : FALLBACK_BLOG;
+        const stored = getStoredBlogPosts();
+        if (stored.length) {
+            allBlogPosts = stored;
+        } else {
+            const r = await fetch('data/blog.json');
+            if (!r.ok) throw new Error('Failed to load');
+            const data = await r.json();
+            allBlogPosts = Array.isArray(data.posts) && data.posts.length ? data.posts : FALLBACK_BLOG;
+        }
     } catch {
         allBlogPosts = FALLBACK_BLOG;
     }

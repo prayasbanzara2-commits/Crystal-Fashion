@@ -124,6 +124,13 @@
         .stat-tile .lbl { font-size: .76rem; color: var(--brown-soft); letter-spacing: .5px; text-transform: uppercase; margin-top: .15rem; }
 
         .admin-grid { display: grid; grid-template-columns: 400px 1fr; gap: 1.5rem; align-items: start; }
+        .blog-admin-grid { margin-top: 1.5rem; }
+        .submission-actions { display: flex; gap: .5rem; margin-top: .6rem; }
+        .approve-btn, .reject-btn {
+            border: none; border-radius: 8px; padding: .42rem .7rem; font-size: .72rem; font-weight: 700; cursor: pointer;
+        }
+        .approve-btn { background: rgba(46,125,79,.12); color: var(--green); }
+        .reject-btn { background: rgba(179,57,46,.08); color: var(--red); }
         @media (max-width: 920px) { .admin-grid { grid-template-columns: 1fr; } }
 
         .card {
@@ -321,6 +328,7 @@
             <div class="stat-tile"><div class="num" id="statCats">0</div><div class="lbl">Categories</div></div>
             <div class="stat-tile"><div class="num" id="statPhotos">0</div><div class="lbl">Total Photos</div></div>
             <div class="stat-tile"><div class="num" id="statAvg">0</div><div class="lbl">Avg. Price (NPR)</div></div>
+            <div class="stat-tile"><div class="num" id="statBlog">0</div><div class="lbl">Blog Posts</div></div>
         </div>
 
         <div class="admin-grid">
@@ -358,6 +366,10 @@
                     </div>
                     <div class="fg">
                         <label>Product Photos <span class="req">*</span> <span style="text-transform:none;font-weight:500;color:var(--brown-soft);">— 1 to 5 photos (first is the main photo)</span></label>
+                        <div class="img-drop" id="productQuickUpload" style="margin-bottom:.8rem;">
+                            <div class="ic">📷</div>
+                            <p><b>Upload product photo</b><br><span class="sub">Use this for the first photo, or click any slot below</span></p>
+                        </div>
                         <div class="photo-grid" id="photoGrid"></div>
                         <input type="file" id="fImgMulti" accept="image/*" style="display:none">
                     </div>
@@ -387,6 +399,91 @@
                 <div class="plist" id="plist"></div>
             </div>
         </div>
+
+        <div class="admin-grid blog-admin-grid">
+            <div class="card">
+                <h2 id="blogFormTitle">Add New Blog Post</h2>
+                <p class="hint">Write a story for the Journal. These entries appear on the public blog pages after you save.</p>
+                <form id="blogForm" autocomplete="off">
+                    <input type="hidden" id="blogId">
+                    <div class="fg" id="gBlogTitle">
+                        <label>Title <span class="req">*</span></label>
+                        <input type="text" id="blogTitle" maxlength="120" placeholder="e.g. Handmade in Kathmandu">
+                        <span class="ferr">Please enter a blog title.</span>
+                    </div>
+                    <div class="fg" id="gBlogAuthor">
+                        <label>Author <span class="req">*</span></label>
+                        <input type="text" id="blogAuthor" maxlength="80" placeholder="Crystal Fashion Team">
+                        <span class="ferr">Please enter an author.</span>
+                    </div>
+                    <div class="fg" id="gBlogCategory">
+                        <label>Category <span class="req">*</span></label>
+                        <input type="text" id="blogCategory" maxlength="40" placeholder="Craftsmanship, Sustainability, etc.">
+                        <span class="ferr">Please enter a category.</span>
+                    </div>
+                    <div class="fg" id="gBlogDate">
+                        <label>Date <span class="req">*</span></label>
+                        <input type="date" id="blogDate">
+                        <span class="ferr">Please choose a date.</span>
+                    </div>
+                    <div class="fg">
+                        <label>Blog Photo</label>
+                        <input type="url" id="blogImage" placeholder="Optional image URL (fallback)">
+                        <div class="img-drop" id="blogImageDrop" style="margin-top:.75rem;">
+                            <div class="ic">📷</div>
+                            <p><b>Upload photo</b><br><span class="sub">JPG/PNG/WEBP</span></p>
+                        </div>
+                        <div class="img-preview-wrap" id="blogImagePreviewWrap" style="margin-top:.75rem; display:none;">
+                            <img id="blogImagePreview" src="" alt="Blog preview" style="max-height:220px;">
+                            <button type="button" class="img-remove" id="blogImageRemove">✕</button>
+                        </div>
+                        <input type="file" id="blogImageFile" accept="image/*" style="display:none">
+                    </div>
+                    <div class="fg">
+                        <label>Excerpt</label>
+                        <textarea id="blogExcerpt" maxlength="220" placeholder="A short teaser for the blog list..."></textarea>
+                    </div>
+                    <div class="fg" id="gBlogContent">
+                        <label>Content <span class="req">*</span></label>
+                        <textarea id="blogContent" maxlength="6000" placeholder="Write the full story here..."></textarea>
+                        <span class="ferr">Please write some content.</span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="saveBlogBtn">＋ Add Blog Post</button>
+                        <button type="button" class="btn-ghost" id="cancelBlogEditBtn" style="display:none;">Cancel</button>
+                    </div>
+                </form>
+                <div class="note-box">
+                    💾 Blog posts are stored in this browser and appear immediately on the Journal pages. Use <b>“Export blog.json”</b> to download a file for deployment.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="list-head">
+                    <div>
+                        <h2>Manage Blog Posts</h2>
+                        <p class="hint" style="margin-bottom:0;">Edit existing stories or remove old posts.</p>
+                    </div>
+                    <div class="list-tools">
+                        <button class="tool-btn" id="exportBlogBtn">⬇ Export blog.json</button>
+                        <button class="tool-btn danger" id="resetBlogBtn">↺ Reset blog posts</button>
+                    </div>
+                </div>
+                <div class="plist" id="blogList"></div>
+            </div>
+        </div>
+
+        <div class="admin-grid blog-admin-grid">
+            <div class="card">
+                <div class="list-head">
+                    <div>
+                        <h2>Pending Community Submissions</h2>
+                        <p class="hint" style="margin-bottom:0;">Approve or reject blog posts submitted by customers before they appear on the website.</p>
+                    </div>
+                </div>
+                <div class="plist" id="submissionQueue"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -413,6 +510,8 @@
 
 var ADMIN_PASSWORD = 'crystalfashion123';
 var STORE_KEY = 'cf_products';
+var BLOG_STORE_KEY = 'cf_blog_posts';
+var BLOG_SUBMISSIONS_KEY = 'cf_blog_submissions';
 var AUTH_KEY = 'cf_admin_auth';
 
 var DEFAULT_PRODUCTS = [
@@ -434,10 +533,20 @@ var DEFAULT_PRODUCTS = [
 ];
 
 var products = [];
+var blogPosts = [];
+var pendingSubmissions = [];
 var editingId = null;
+var editingBlogId = null;
 var MAX_PHOTOS = 5;
 var currentImages = [];  // up to 5 data-URLs / filenames
+var currentBlogImage = '';
 var listQuery = '';
+
+var DEFAULT_BLOG_POSTS = [
+  { id: 1, title: 'The Art of Handcrafted Fashion', author: 'Crystal Fashion Team', date: '2024-05-20', image: 'https://sspark.genspark.ai/i/v0UCtUoskbbrCIbO?width=1200', excerpt: 'Discover the meticulous process behind every handcrafted piece and why handmade fashion matters.', content: 'In a world of mass production, handcrafted fashion stands as a testament to artistry and dedication. Every piece created by our artisans involves hours of careful work, from selecting the finest materials to the final stitch. This dedication ensures that each product carries a unique character that no machine-made item can replicate.\n\nOur artisans have spent years perfecting their craft, learning techniques passed down through generations. When you purchase from Crystal Fashion, you are not just buying a product—you are supporting a living tradition and the livelihoods of skilled craftspeople.\n\nHandcrafted items often become cherished possessions, telling stories of their creation and the hands that made them. This personal connection is what makes handmade fashion truly special.', category: 'Craftsmanship' },
+  { id: 2, title: 'Sustainable Fashion: Our Commitment', author: 'Crystal Fashion Team', date: '2024-05-15', image: 'https://sspark.genspark.ai/i/qp9JrcYgGCXPbRVQ?width=1200', excerpt: 'Learn how we are committed to sustainable practices and eco-friendly materials in all our products.', content: 'Sustainability is at the heart of everything we do at Crystal Fashion. We believe that fashion should not come at the cost of our planet. That is why we have made a commitment to using sustainable and eco-friendly materials in all our products.\n\nOur hemp and organic cotton collections are perfect examples of this commitment. These materials are not only better for the environment but also offer superior quality and durability compared to conventional fabrics.\n\nWe also work closely with our suppliers to ensure that every material is sourced responsibly. From the hemp fields to the tanneries, we maintain the highest environmental standards. By choosing Crystal Fashion, you are making a conscious choice for a better planet.', category: 'Sustainability' },
+  { id: 3, title: 'Meet Our Master Artisans', author: 'Crystal Fashion Team', date: '2024-05-10', image: 'https://sspark.genspark.ai/i/aUyjwtACZUpDrw8F?width=1200', excerpt: 'Get to know the talented artisans behind our beautiful creations and their incredible stories.', content: 'Behind every Crystal Fashion product is a master artisan with years of experience and a passion for their craft. These skilled individuals dedicate their lives to creating beautiful, functional pieces that reflect the rich heritage of Nepali craftsmanship.\n\nOur artisans come from different regions of Nepal, each bringing their unique perspective and techniques to their work. Some specialize in traditional Dhaka weaving, others in leather work, and many have developed their own signature styles.\n\nWe are proud to provide fair wages, safe working conditions, and opportunities for professional growth to all our artisans. Their success is our success, and their creations are the soul of Crystal Fashion.', category: 'Community' }
+];
 
 /* ---------- helpers ---------- */
 function $(id) { return document.getElementById(id); }
@@ -479,6 +588,45 @@ function saveStore() {
     }
 }
 
+function loadBlogStore() {
+    var stored = null;
+    try { stored = JSON.parse(localStorage.getItem(BLOG_STORE_KEY) || 'null'); } catch (e) { stored = null; }
+    if (Array.isArray(stored) && stored.length) {
+        blogPosts = stored;
+    } else {
+        blogPosts = DEFAULT_BLOG_POSTS.slice();
+        saveBlogStore();
+    }
+}
+function saveBlogStore() {
+    try {
+        localStorage.setItem(BLOG_STORE_KEY, JSON.stringify(blogPosts));
+        return true;
+    } catch (e) {
+        toast('Storage is full — try a smaller blog post.', 'error');
+        return false;
+    }
+}
+
+function loadPendingSubmissions() {
+    try {
+        var stored = JSON.parse(localStorage.getItem(BLOG_SUBMISSIONS_KEY) || 'null');
+        pendingSubmissions = Array.isArray(stored) ? stored : [];
+    } catch (e) {
+        pendingSubmissions = [];
+    }
+}
+
+function savePendingSubmissions() {
+    try {
+        localStorage.setItem(BLOG_SUBMISSIONS_KEY, JSON.stringify(pendingSubmissions));
+        return true;
+    } catch (e) {
+        toast('Storage is full — try a smaller submission.', 'error');
+        return false;
+    }
+}
+
 /* ---------- auth ---------- */
 function isAuthed() {
     try { return sessionStorage.getItem(AUTH_KEY) === '1'; } catch (e) { return false; }
@@ -487,6 +635,8 @@ function showAdmin() {
     $('loginView').style.display = 'none';
     $('adminView').style.display = 'block';
     loadStore();
+    loadBlogStore();
+    loadPendingSubmissions();
     renderPhotoSlots();
     renderAll();
 }
@@ -519,10 +669,13 @@ $('logoutBtn').addEventListener('click', function () {
 function renderAll() {
     renderStats();
     renderList();
+    renderBlogList();
+    renderSubmissionQueue();
 }
 
 function renderStats() {
     $('statTotal').textContent = products.length;
+    $('statBlog').textContent = blogPosts.length;
     var cats = {};
     var photos = 0;
     var total = 0;
@@ -574,6 +727,262 @@ $('listSearch').addEventListener('input', function () {
     listQuery = this.value.trim();
     renderList();
 });
+
+/* ---------- blog management ---------- */
+function resetBlogFormState() {
+    editingBlogId = null;
+    currentBlogImage = '';
+    $('blogForm').reset();
+    $('blogId').value = '';
+    $('blogFormTitle').textContent = 'Add New Blog Post';
+    $('saveBlogBtn').textContent = '＋ Add Blog Post';
+    $('cancelBlogEditBtn').style.display = 'none';
+    $('blogImagePreviewWrap').style.display = 'none';
+    $('blogImagePreview').src = '';
+    ['gBlogTitle','gBlogAuthor','gBlogCategory','gBlogDate','gBlogContent'].forEach(function (g) {
+        setInvalid(g, false);
+    });
+}
+
+function renderBlogImagePreview() {
+    var previewWrap = $('blogImagePreviewWrap');
+    var previewImg = $('blogImagePreview');
+    if (currentBlogImage) {
+        previewImg.src = currentBlogImage;
+        previewWrap.style.display = 'block';
+    } else {
+        previewWrap.style.display = 'none';
+        previewImg.src = '';
+    }
+}
+
+function handleBlogImageFile(file) {
+    if (!file || !/^image\//.test(file.type)) {
+        toast('Please choose an image file.', 'error');
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function (ev) {
+        var img = new Image();
+        img.onload = function () {
+            var max = 1200;
+            var w = img.width;
+            var h = img.height;
+            if (Math.max(w, h) > max) {
+                var scale = max / Math.max(w, h);
+                w = Math.round(w * scale);
+                h = Math.round(h * scale);
+            }
+            var canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            var ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+            currentBlogImage = canvas.toDataURL('image/jpeg', 0.82);
+            renderBlogImagePreview();
+            toast('Blog photo ready 📷', 'success');
+        };
+        img.onerror = function () { toast('Could not read that image.', 'error'); };
+        img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+$('blogImageDrop').addEventListener('click', function () { $('blogImageFile').click(); });
+$('blogImageFile').addEventListener('change', function () {
+    if (this.files && this.files[0]) {
+        handleBlogImageFile(this.files[0]);
+    }
+    this.value = '';
+});
+$('blogImageRemove').addEventListener('click', function () {
+    currentBlogImage = '';
+    renderBlogImagePreview();
+});
+
+function renderSubmissionQueue() {
+    var box = $('submissionQueue');
+    if (!pendingSubmissions.length) {
+        box.innerHTML = '<div class="empty-list">✅ No community submissions waiting for review.</div>';
+        return;
+    }
+
+    box.innerHTML = pendingSubmissions.map(function (post) {
+        var short = (post.excerpt || post.content || '').replace(/\s+/g, ' ').trim();
+        if (short.length > 90) short = short.slice(0, 87) + '...';
+        return '' +
+        '<div class="pitem">' +
+            '<div class="pinfo">' +
+                '<div class="pname">' + esc(post.title || 'Untitled') + '</div>' +
+                '<div class="pmeta"><span class="pcat">' + esc(post.category || 'General') + '</span> &nbsp;·&nbsp; ' + esc(post.author || 'Anonymous') + ' &nbsp;·&nbsp; ' + esc(post.date || 'No date') + '</div>' +
+                '<div class="pmeta" style="margin-top:.3rem; color:var(--brown-soft);">' + esc(short) + '</div>' +
+                '<div class="submission-actions">' +
+                    '<button class="approve-btn" onclick="approveSubmission(' + post.id + ')">Approve</button>' +
+                    '<button class="reject-btn" onclick="rejectSubmission(' + post.id + ')">Reject</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+}
+
+function approveSubmission(id) {
+    var item = pendingSubmissions.find(function (x) { return Number(x.id) === Number(id); });
+    if (!item) return;
+    var approved = {
+        id: Number(item.id) || Date.now(),
+        title: item.title || 'Untitled',
+        author: item.author || 'Anonymous',
+        category: item.category || 'General',
+        date: item.date || new Date().toISOString().slice(0, 10),
+        image: item.image || '',
+        excerpt: item.excerpt || (item.content || '').slice(0, 180),
+        content: item.content || ''
+    };
+    blogPosts.unshift(approved);
+    pendingSubmissions = pendingSubmissions.filter(function (x) { return Number(x.id) !== Number(id); });
+    if (!saveBlogStore() || !savePendingSubmissions()) return;
+    renderAll();
+    toast('Submission approved and published ✓', 'success');
+}
+
+function rejectSubmission(id) {
+    pendingSubmissions = pendingSubmissions.filter(function (x) { return Number(x.id) !== Number(id); });
+    savePendingSubmissions();
+    renderAll();
+    toast('Submission rejected', 'success');
+}
+
+function renderBlogList() {
+    var box = $('blogList');
+    if (!blogPosts.length) {
+        box.innerHTML = '<div class="empty-list">📝 No blog posts yet.<br>Create your first journal entry using the form.</div>';
+        return;
+    }
+
+    box.innerHTML = blogPosts.map(function (post) {
+        var short = (post.excerpt || post.content || '').replace(/\s+/g, ' ').trim();
+        if (short.length > 90) short = short.slice(0, 87) + '...';
+        return '' +
+        '<div class="pitem' + (post.id === editingBlogId ? ' editing' : '') + '">' +
+            '<div class="pinfo">' +
+                '<div class="pname">' + esc(post.title || 'Untitled') + '</div>' +
+                '<div class="pmeta"><span class="pcat">' + esc(post.category || 'General') + '</span> &nbsp;·&nbsp; ' + esc(post.author || 'Anonymous') + ' &nbsp;·&nbsp; ' + esc(post.date || 'No date') + '</div>' +
+                '<div class="pmeta" style="margin-top:.3rem; color:var(--brown-soft);">' + esc(short) + '</div>' +
+            '</div>' +
+            '<div class="pbtns">' +
+                '<button class="icon-btn" title="Edit blog post" onclick="startEditBlog(' + post.id + ')">✏️</button>' +
+                '<button class="icon-btn del" title="Delete blog post" onclick="askDeleteBlog(' + post.id + ')">🗑️</button>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+}
+
+function startEditBlog(id) {
+    var post = blogPosts.find(function (x) { return x.id === id; });
+    if (!post) return;
+    editingBlogId = id;
+    currentBlogImage = post.image || '';
+    $('blogId').value = id;
+    $('blogTitle').value = post.title || '';
+    $('blogAuthor').value = post.author || '';
+    $('blogCategory').value = post.category || '';
+    $('blogDate').value = post.date || '';
+    $('blogImage').value = post.image || '';
+    $('blogExcerpt').value = post.excerpt || '';
+    $('blogContent').value = post.content || '';
+    renderBlogImagePreview();
+    $('blogFormTitle').textContent = 'Edit Blog Post';
+    $('saveBlogBtn').textContent = '💾 Save Blog Post';
+    $('cancelBlogEditBtn').style.display = 'inline-block';
+    renderBlogList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function askDeleteBlog(id) {
+    var post = blogPosts.find(function (x) { return x.id === id; });
+    if (!post) return;
+    pendingBlogDeleteId = id;
+    $('cfTitle').textContent = 'Delete this blog post?';
+    $('cfText').textContent = '"' + post.title + '" will be removed from the Journal.';
+    $('cfOverlay').classList.add('show');
+}
+
+$('cancelBlogEditBtn').addEventListener('click', resetBlogFormState);
+
+['blogTitle','blogAuthor','blogCategory','blogDate','blogContent'].forEach(function (id) {
+    $(id).addEventListener('input', function () {
+        this.closest('.fg').classList.remove('invalid');
+    });
+});
+
+$('blogForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var title = $('blogTitle').value.trim();
+    var author = $('blogAuthor').value.trim();
+    var category = $('blogCategory').value.trim();
+    var date = $('blogDate').value;
+    var image = currentBlogImage || $('blogImage').value.trim();
+    var excerpt = $('blogExcerpt').value.trim();
+    var content = $('blogContent').value.trim();
+
+    var ok = true;
+    if (title.length < 2) { setInvalid('gBlogTitle', true); ok = false; }
+    if (author.length < 2) { setInvalid('gBlogAuthor', true); ok = false; }
+    if (!category) { setInvalid('gBlogCategory', true); ok = false; }
+    if (!date) { setInvalid('gBlogDate', true); ok = false; }
+    if (content.length < 20) { setInvalid('gBlogContent', true); ok = false; }
+    if (!ok) { toast('Please fill in the required blog fields.', 'error'); return; }
+
+    var item = {
+        id: editingBlogId || Date.now(),
+        title: title,
+        author: author,
+        category: category,
+        date: date,
+        image: image,
+        excerpt: excerpt || content.slice(0, 180) + (content.length > 180 ? '...' : ''),
+        content: content
+    };
+
+    if (editingBlogId !== null) {
+        var idx = blogPosts.findIndex(function (x) { return x.id === editingBlogId; });
+        if (idx >= 0) blogPosts[idx] = Object.assign(blogPosts[idx], item);
+        toast('Blog post updated ✓', 'success');
+    } else {
+        blogPosts.unshift(item);
+        toast('Blog post added ✓', 'success');
+    }
+
+    if (!saveBlogStore()) return;
+    resetBlogFormState();
+    renderAll();
+});
+
+$('exportBlogBtn').addEventListener('click', function () {
+    var payload = JSON.stringify({ posts: blogPosts }, null, 2);
+    var blob = new Blob([payload], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'blog.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 500);
+    toast('blog.json downloaded ⬇', 'success');
+});
+
+$('resetBlogBtn').addEventListener('click', function () {
+    pendingBlogReset = true;
+    $('cfTitle').textContent = 'Reset blog posts?';
+    $('cfText').textContent = 'This will restore the default journal content and delete your custom blog entries.';
+    $('cfOverlay').classList.add('show');
+});
+
+var pendingBlogDeleteId = null;
+var pendingBlogReset = false;
 
 /* ---------- form ---------- */
 function setInvalid(groupId, bad) {
@@ -672,6 +1081,8 @@ function askDelete(id) {
 }
 $('cfCancel').addEventListener('click', function () {
     pendingDeleteId = null;
+    pendingBlogDeleteId = null;
+    pendingBlogReset = false;
     $('cfOverlay').classList.remove('show');
 });
 $('cfConfirm').addEventListener('click', function () {
@@ -682,11 +1093,30 @@ $('cfConfirm').addEventListener('click', function () {
         renderAll();
         toast('Product deleted', 'success');
         pendingDeleteId = null;
+    } else if (pendingBlogDeleteId !== null) {
+        blogPosts = blogPosts.filter(function (x) { return x.id !== pendingBlogDeleteId; });
+        if (editingBlogId === pendingBlogDeleteId) resetBlogFormState();
+        saveBlogStore();
+        renderAll();
+        toast('Blog post deleted', 'success');
+        pendingBlogDeleteId = null;
+    } else if (pendingBlogReset) {
+        blogPosts = DEFAULT_BLOG_POSTS.slice();
+        saveBlogStore();
+        resetBlogFormState();
+        renderAll();
+        toast('Journal restored to defaults ↺', 'success');
+        pendingBlogReset = false;
     }
     $('cfOverlay').classList.remove('show');
 });
 $('cfOverlay').addEventListener('click', function (e) {
-    if (e.target === this) { pendingDeleteId = null; this.classList.remove('show'); }
+    if (e.target === this) {
+        pendingDeleteId = null;
+        pendingBlogDeleteId = null;
+        pendingBlogReset = false;
+        this.classList.remove('show');
+    }
 });
 
 /* ---------- image upload: 1 to 5 photo slots, with resize/compress ---------- */
@@ -740,6 +1170,29 @@ function renderPhotoSlots() {
             grid.appendChild(cell);
         })(i);
     }
+}
+
+var productQuickUpload = $('productQuickUpload');
+if (productQuickUpload) {
+    productQuickUpload.addEventListener('click', function () {
+        photoTarget = 0;
+        photoInput.click();
+    });
+    productQuickUpload.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        this.classList.add('drag');
+    });
+    productQuickUpload.addEventListener('dragleave', function () {
+        this.classList.remove('drag');
+    });
+    productQuickUpload.addEventListener('drop', function (e) {
+        e.preventDefault();
+        this.classList.remove('drag');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            photoTarget = 0;
+            handleImageFile(e.dataTransfer.files[0], 0);
+        }
+    });
 }
 
 photoInput.addEventListener('change', function () {
