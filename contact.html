@@ -73,8 +73,8 @@
                 <a href="index.html#home" class="nav-link">Home</a>
                 <a href="index.html#about" class="nav-link">About</a>
                 <a href="index.html#products" class="nav-link">Collection</a>
-                <a href="blog.html" class="nav-link">Journal</a>
-                <a href="contact.html" class="nav-link active">Contact</a>
+                <a href="index.html#blog" class="nav-link">Blog</a>
+                <a href="index.html#contact" class="nav-link active">Contact</a>
                 <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
@@ -127,7 +127,7 @@
                         <li><a href="index.html#home">Home</a></li>
                         <li><a href="index.html#about">About</a></li>
                         <li><a href="index.html#products">Collection</a></li>
-                        <li><a href="blog.html">Journal</a></li>
+                        <li><a href="index.html#blog">Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -162,6 +162,9 @@
             });
         }
         window.addEventListener('scroll', () => document.getElementById('mainHeader')?.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+    </script>
+    <script>
+        window.location.replace('index.html#contact');
     </script>
     <script src="js/cookie-consent.js"></script>
 </body>

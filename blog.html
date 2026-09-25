@@ -205,7 +205,7 @@
                 <a href="index.html#about" class="nav-link">About</a>
                 <a href="index.html#products" class="nav-link">Collection</a>
                 <a href="index.html#blog" class="nav-link active">Blog</a>
-                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
                 <a href="https://wa.me/9779704828728" class="nav-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
             </nav>
             <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
@@ -222,7 +222,7 @@
                 <p>Explore the craft, culture, and values behind every handmade piece. Our journal shares the stories, ideas, and sustainable philosophy that shape Crystal Fashion.</p>
                 <div class="page-hero-actions">
                     <a href="index.html#products" class="btn btn-primary">Discover collection</a>
-                    <a href="contact.html" class="btn btn-secondary">Talk to us</a>
+                    <a href="index.html#contact" class="btn btn-secondary">Talk to us</a>
                 </div>
             </div>
         </section>
@@ -265,7 +265,7 @@
                         <li><a href="index.html#home">Home</a></li>
                         <li><a href="index.html#about">About</a></li>
                         <li><a href="index.html#products">Collection</a></li>
-                        <li><a href="blog.html">Journal</a></li>
+                        <li><a href="index.html#blog">Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -293,6 +293,10 @@
     </footer>
 
     <script>
+        if (window.location.pathname.endsWith('/blog.html') || window.location.pathname.endsWith('blog.html')) {
+            window.location.replace('index.html#blog');
+        }
+
         const categoryPills = document.getElementById('categoryPills');
         const blogGrid = document.getElementById('blogGrid');
         let allPosts = [];

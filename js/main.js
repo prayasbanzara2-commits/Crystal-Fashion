@@ -209,7 +209,7 @@ function renderBlog(posts) {
                 <div class="blog-excerpt">${escHtml(p.excerpt || '')}</div>
                 <div class="blog-meta">
                     <span>✍️ ${escHtml(p.author)}</span>
-                    <span class="blog-read-more">Read More →</span>
+                    <span class="blog-read-more">Read More</span>
                 </div>
             </div>
         </article>`;
