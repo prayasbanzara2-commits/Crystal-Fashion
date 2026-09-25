@@ -370,19 +370,33 @@ function setupMobileMenu() {
     const btn = document.getElementById('mobileMenuBtn');
     const menu = document.getElementById('navMenu');
     if (!btn || !menu) return;
+
+    const setMenuState = (isOpen) => {
+        menu.classList.toggle('active', isOpen);
+        btn.classList.toggle('open', isOpen);
+        document.body.classList.toggle('menu-open', isOpen && window.innerWidth <= 768);
+    };
+
     btn.addEventListener('click', () => {
-        menu.classList.toggle('active');
-        btn.classList.toggle('open');
+        const willOpen = !menu.classList.contains('active');
+        setMenuState(willOpen);
     });
+
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
-            menu.classList.remove('active');
-            btn.classList.remove('open');
+            setMenuState(false);
         });
     });
+
     document.addEventListener('click', e => {
         if (!e.target.closest('.header')) {
-            menu.classList.remove('active');
+            setMenuState(false);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            setMenuState(false);
         }
     });
 }
