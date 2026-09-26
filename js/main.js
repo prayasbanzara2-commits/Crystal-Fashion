@@ -76,14 +76,23 @@ async function loadProducts() {
     renderProducts(allProducts);
 }
 
+function getPreviewLimit() {
+    const width = window.innerWidth;
+    if (width <= 480) return 4;
+    if (width <= 768) return 4;
+    if (width <= 1100) return 5;
+    return 8;
+}
+
 function renderProducts(list) {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
     if (!list.length) { grid.innerHTML = '<div class="no-results">No products found.</div>'; return; }
 
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const showAll = !isMobile || mobileProductsExpanded || list.length <= 4;
-    const visibleList = showAll ? list : list.slice(0, 4);
+    const previewLimit = getPreviewLimit();
+    const shouldCompactPreview = list.length > previewLimit;
+    const showAll = !shouldCompactPreview || mobileProductsExpanded;
+    const visibleList = showAll ? list : list.slice(0, previewLimit);
 
     grid.innerHTML = visibleList.map((p, i) => {
         const src = imgSrc(p.image, 'products');
@@ -110,7 +119,7 @@ function renderProducts(list) {
         </div>`;
     }).join('');
 
-    if (isMobile && list.length > 4) {
+    if (shouldCompactPreview) {
         const buttonLabel = mobileProductsExpanded ? 'Show less' : 'Explore more';
         grid.insertAdjacentHTML('beforeend', `
             <div class="mobile-expand-row">
@@ -126,11 +135,27 @@ function renderProducts(list) {
     triggerFadeIn();
 }
 
+function normalizeProductCategory(cat) {
+    const value = String(cat || '').trim();
+    const map = {
+        'Hemp': 'Hemps',
+        'Hemps': 'Hemps',
+        'Tote': 'Tote',
+        'Trousers': 'Trousers',
+        'Hobo': 'Hobo',
+        'Side Bag': 'Side Bag',
+        'All': 'All'
+    };
+    return map[value] || value;
+}
+
 function filterByCategory(cat) {
+    const normalizedCat = normalizeProductCategory(cat);
     document.querySelectorAll('.filter-btn').forEach(b => {
-        b.classList.toggle('active', b.textContent.trim() === cat || (cat === 'All' && b.textContent.trim() === 'All'));
+        const buttonLabel = normalizeProductCategory(b.textContent.trim());
+        b.classList.toggle('active', buttonLabel === normalizedCat || (normalizedCat === 'All' && buttonLabel === 'All'));
     });
-    const list = cat === 'All' ? allProducts : allProducts.filter(p => p.category === cat);
+    const list = normalizedCat === 'All' ? allProducts : allProducts.filter(p => normalizeProductCategory(p.category) === normalizedCat);
     renderProducts(list);
     const productsSection = document.getElementById('products');
     if (productsSection) {
@@ -218,9 +243,10 @@ function renderBlog(posts) {
     const grid = document.getElementById('blogGrid');
     if (!grid) return;
 
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const showAll = !isMobile || mobileBlogExpanded || posts.length <= 4;
-    const visiblePosts = showAll ? posts : posts.slice(0, 4);
+    const previewLimit = getPreviewLimit();
+    const shouldCompactPreview = posts.length > previewLimit;
+    const showAll = !shouldCompactPreview || mobileBlogExpanded;
+    const visiblePosts = showAll ? posts : posts.slice(0, previewLimit);
 
     grid.innerHTML = visiblePosts.map((p, i) => {
         const src = imgSrc(p.image, 'backgrounds');
@@ -241,7 +267,7 @@ function renderBlog(posts) {
         </article>`;
     }).join('');
 
-    if (isMobile && posts.length > 4) {
+    if (shouldCompactPreview) {
         const buttonLabel = mobileBlogExpanded ? 'Show less' : 'Explore more';
         grid.insertAdjacentHTML('beforeend', `
             <div class="mobile-expand-row">
@@ -473,6 +499,7 @@ function setupNavActiveLink() {
         products: '#products',
         blog: '#blog',
         connect: '#connect',
+        location: '#connect',
         contact: '#contact'
     };
 
