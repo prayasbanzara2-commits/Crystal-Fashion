@@ -30,6 +30,7 @@
             background: var(--ivory);
             color: var(--brown);
             min-height: 100vh;
+            overflow-x: hidden;
         }
         h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
         button { font-family: 'Inter', sans-serif; cursor: pointer; }
@@ -131,7 +132,62 @@
         }
         .approve-btn { background: rgba(46,125,79,.12); color: var(--green); }
         .reject-btn { background: rgba(179,57,46,.08); color: var(--red); }
-        @media (max-width: 920px) { .admin-grid { grid-template-columns: 1fr; } }
+
+        @media (max-width: 1024px) {
+            .admin-wrap { padding-left: 1.1rem; padding-right: 1.1rem; }
+            .admin-grid { grid-template-columns: 1fr; }
+            .card { padding: 1.2rem; }
+            .list-head { flex-direction: column; align-items: stretch; }
+            .list-tools { width: 100%; }
+            .tool-btn { flex: 1; justify-content: center; }
+        }
+
+        @media (max-width: 720px) {
+            .admin-topbar {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: .75rem;
+                padding: .8rem 1rem;
+            }
+            .topbar-actions {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .tb-btn {
+                flex: 1 1 180px;
+                justify-content: center;
+            }
+            .stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .login-card { padding: 2rem 1.25rem; }
+            .card h2 { font-size: 1.1rem; }
+            .form-actions { flex-direction: column; }
+            .btn-primary, .btn-ghost { width: 100%; }
+            .pitem {
+                align-items: flex-start;
+                gap: .7rem;
+            }
+            .pitem .pname { white-space: normal; }
+            .pinfo { min-width: 0; }
+        }
+
+        @media (max-width: 480px) {
+            .admin-wrap { padding: 1rem .85rem 3rem; }
+            .stats-row { grid-template-columns: 1fr; }
+            .stat-tile .num { font-size: 1.45rem; }
+            .login-card h1 { font-size: 1.35rem; }
+            .topbar-actions { gap: .45rem; }
+            .tb-btn { flex-basis: 100%; }
+            .list-tools { flex-direction: column; }
+            .tool-btn { width: 100%; }
+            .photo-grid { grid-template-columns: 1fr; }
+            .pitem { flex-wrap: wrap; }
+            .pbtns { width: 100%; justify-content: flex-end; }
+            .pitem .pname { font-size: .85rem; }
+            .pitem .pmeta { font-size: .7rem; }
+            .list-search { font-size: 16px; }
+            .fg input, .fg textarea { font-size: 16px; }
+        }
 
         .card {
             background: #fff; border: 1px solid var(--ivory-deep);
